@@ -1,7 +1,7 @@
 .button {
   border: 2px solid var(--col-primary-dark-purple);
   padding: 10px 32px;
-  margin: 0 0 0 16px;
+  // margin: 0 0 0 16px;
   border-radius: 8px;
 
   font-size: 20px;
@@ -9,5 +9,11 @@
   &__solid {
     color: #fff;
     background-color: var(--col-primary-dark-purple);
+  }
+
+  &:hover {
+    border-color: var(--col-primary-purple);
+    background-color: var(--col-primary-purple);
+    color: #fff;
   }
 }

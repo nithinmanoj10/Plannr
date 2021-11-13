@@ -1,0 +1,42 @@
+.hero-box {
+  flex: 1;
+
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    // justify-content: center;
+
+    padding-right: 50px;
+    padding-top: 55px;
+    padding-left: 50px;
+
+    &__heading {
+      font-family: "Inter", sans-serif;
+      font-size: 42px;
+    }
+
+    &__description {
+      font-size: 19px;
+      margin-top: 30px;
+      margin-bottom: 15px;
+    }
+  }
+
+  &__image {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    padding-right: 50px;
+    padding-top: 30px;
+
+    &__vector {
+      width: 100%;
+      object-fit: contain;
+    }
+  }
+}
