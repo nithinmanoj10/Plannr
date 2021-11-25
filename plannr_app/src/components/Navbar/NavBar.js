@@ -12,17 +12,17 @@ export default function NavBar() {
       </div>
       <ul className="nav-bar__list">
         <li className="nav-bar__list__item">
-          <a href="#" className="nav-bar__list__item__link">
+          <a href="javascript:void(0)" className="nav-bar__list__item__link">
             About
           </a>
         </li>
         <li className="nav-bar__list__item">
-          <a href="#" className="nav-bar__list__item__link">
+          <a href="javascript:void(0)" className="nav-bar__list__item__link">
             How To Use
           </a>
         </li>
         <li className="nav-bar__list__item">
-          <a href="#" className="nav-bar__list__item__link">
+          <a href="javascript:void(0)" className="nav-bar__list__item__link">
             Contact Us
           </a>
         </li>

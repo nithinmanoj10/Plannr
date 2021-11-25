@@ -3,8 +3,16 @@
   width: 85%;
   margin: auto;
   min-height: 100vh;
+  max-width: 3020px;
   // background-color: rgba(250, 235, 215, 0.26);
 
   display: flex;
   flex-direction: column;
+}
+
+// For bigger screens
+@media screen and (min-width: 1300px) {
+  .App {
+    width: 70%;
+  }
 }

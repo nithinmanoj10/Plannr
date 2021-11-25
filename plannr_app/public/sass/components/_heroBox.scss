@@ -2,16 +2,21 @@
   flex: 1;
 
   display: grid;
-  grid-template-columns: 1fr 1.5fr;
+  grid-template-columns: 1fr 1fr;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
   &__text {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    // justify-content: center;
+    justify-content: flex-start;
 
-    padding-right: 50px;
-    padding-top: 55px;
+    padding-top: 70px;
     padding-left: 50px;
 
     &__heading {
@@ -20,9 +25,10 @@
     }
 
     &__description {
+      padding-right: 120px;
       font-size: 19px;
-      margin-top: 30px;
-      margin-bottom: 15px;
+      margin: 50px 0;
+      color: var(--col-text-light-grey);
     }
   }
 

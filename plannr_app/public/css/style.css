@@ -2,6 +2,7 @@
   --col-primary-dark-purple: #2b0548;
   --col-primary-purple: #4630ab;
   --col-primary-light-purple: #6669c5;
+  --col-text-light-grey: #808080;
 }
 
 *,
@@ -40,16 +41,17 @@ a {
 
 .nav-bar__list {
   list-style: none;
+  flex: 1;
   display: flex;
+  justify-content: flex-end;
   flex-direction: row;
   align-items: center;
-  margin-left: 120px;
 }
 
 .nav-bar__list__item {
   margin: auto 23px;
   font-size: 20px;
-  font-weight: 400;
+  font-weight: 300;
   color: var(--col-primary-dark-purple);
 }
 
@@ -60,10 +62,10 @@ a {
 .nav-bar__buttons {
   display: flex;
   flex-direction: row;
+  justify-content: space-evenly;
   align-items: center;
   margin-left: 10px;
-  flex: 1;
-  justify-content: space-between;
+  min-width: 280px;
 }
 
 .logo__img {
@@ -76,7 +78,9 @@ a {
   border: 2px solid var(--col-primary-dark-purple);
   padding: 10px 32px;
   border-radius: 8px;
+  transition: 0.2s;
   font-size: 20px;
+  box-shadow: rgba(99, 99, 99, 0.4) 0px 2px 8px 0px;
 }
 
 .button__solid {
@@ -88,20 +92,32 @@ a {
   border-color: var(--col-primary-purple);
   background-color: var(--col-primary-purple);
   color: #fff;
+  transform: translateY(-4px);
+}
+
+.button:active {
+  transform: translateY(-1px);
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
 .hero-box {
   flex: 1;
   display: grid;
-  grid-template-columns: 1fr 1.5fr;
+  grid-template-columns: 1fr 1fr;
+}
+
+.hero-box__container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .hero-box__text {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding-right: 50px;
-  padding-top: 55px;
+  justify-content: flex-start;
+  padding-top: 70px;
   padding-left: 50px;
 }
 
@@ -111,9 +127,10 @@ a {
 }
 
 .hero-box__text__description {
+  padding-right: 120px;
   font-size: 19px;
-  margin-top: 30px;
-  margin-bottom: 15px;
+  margin: 50px 0;
+  color: var(--col-text-light-grey);
 }
 
 .hero-box__image {
@@ -134,7 +151,14 @@ a {
   width: 85%;
   margin: auto;
   min-height: 100vh;
+  max-width: 3020px;
   display: flex;
   flex-direction: column;
+}
+
+@media screen and (min-width: 1300px) {
+  .App {
+    width: 70%;
+  }
 }
 /*# sourceMappingURL=style.css.map */
