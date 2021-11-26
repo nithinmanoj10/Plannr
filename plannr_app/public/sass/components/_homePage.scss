@@ -8,6 +8,8 @@
     bottom: 0;
 
     width: 100%;
+
+    animation: 1.5s ease-out 0s 1 slideUpFromBottom;
   }
 }
 
@@ -25,8 +27,9 @@
   justify-content: space-evenly;
 
   &__logo {
-    max-height: 90px;
+    height: 90px;
     margin-bottom: 50px;
+    animation: 3s ease-out 0s 1 plannrLogo;
   }
 
   &__title {
@@ -35,10 +38,59 @@
     font-size: 40px;
     line-height: 1.2;
     font-weight: 500;
+    animation: 5s ease-out 0s 1 homePageDesc;
   }
 
   &__para {
     font-family: "Manrope", sans-serif;
     text-align: center;
+    animation: 5s ease-out 0s 1 homePageDesc;
+  }
+
+  .button {
+    animation: 5s ease-out 0s 1 homePageDesc;
+  }
+}
+
+@keyframes slideUpFromBottom {
+  0% {
+    transform: translateY(100px);
+    opacity: 0%;
+  }
+  100% {
+    transform: translateY(0px);
+    opacity: 100%;
+  }
+}
+
+@keyframes plannrLogo {
+  0% {
+    opacity: 0%;
+    height: 130px;
+    transform: translateY(200px);
+  }
+  50% {
+    opacity: 100%;
+    height: 130px;
+    transform: translateY(200px);
+  }
+  100% {
+    height: 90px;
+    transform: translateY(0px);
+  }
+}
+
+@keyframes homePageDesc {
+  0% {
+    opacity: 0%;
+    transform: translateY(100px);
+  }
+  60% {
+    opacity: 0%;
+    transform: translateY(100px);
+  }
+  100% {
+    opacity: 100%;
+    transform: translateY(0px);
   }
 }
