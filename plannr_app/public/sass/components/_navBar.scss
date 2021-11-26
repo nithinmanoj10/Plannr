@@ -20,12 +20,13 @@
       margin: auto 23px;
 
       font-size: 20px;
-      font-weight: 300;
+      font-weight: 400;
       color: var(--col-primary-dark-purple);
 
       &__link {
+        opacity: 70%;
         &:hover {
-          color: var(--col-primary-light-purple);
+          opacity: 100%;
         }
       }
     }

@@ -1,0 +1,44 @@
+.homepage {
+  min-width: 1vw;
+  height: 100%;
+
+  &__vector {
+    position: absolute;
+    z-index: -10;
+    bottom: 0;
+
+    width: 100%;
+  }
+}
+
+.homepage-description {
+  height: 460px;
+  width: 480px;
+
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+
+  &__logo {
+    max-height: 90px;
+    margin-bottom: 50px;
+  }
+
+  &__title {
+    font-family: "Epilogue", sans-serif;
+    text-align: center;
+    font-size: 40px;
+    line-height: 1.2;
+    font-weight: 500;
+  }
+
+  &__para {
+    font-family: "Manrope", sans-serif;
+    text-align: center;
+  }
+}

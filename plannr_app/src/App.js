@@ -1,11 +1,15 @@
-import NavBar from "./components/Navbar/NavBar";
-import Herobox from "./components/Herobox/Herobox";
+import React from "react";
+import Homepage from "./components/Homepage/Homepage";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
 function App() {
   return (
     <div className="App">
-      <NavBar />
-      <Herobox />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Homepage />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

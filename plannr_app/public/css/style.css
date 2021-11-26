@@ -51,12 +51,16 @@ a {
 .nav-bar__list__item {
   margin: auto 23px;
   font-size: 20px;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--col-primary-dark-purple);
 }
 
+.nav-bar__list__item__link {
+  opacity: 70%;
+}
+
 .nav-bar__list__item__link:hover {
-  color: var(--col-primary-light-purple);
+  opacity: 100%;
 }
 
 .nav-bar__buttons {
@@ -146,19 +150,56 @@ a {
   object-fit: contain;
 }
 
-.App {
-  position: relative;
-  width: 85%;
-  margin: auto;
-  min-height: 100vh;
-  max-width: 3020px;
+.homepage {
+  min-width: 1vw;
+  height: 100%;
+}
+
+.homepage__vector {
+  position: absolute;
+  z-index: -10;
+  bottom: 0;
+  width: 100%;
+}
+
+.homepage-description {
+  height: 460px;
+  width: 480px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.homepage-description__logo {
+  max-height: 90px;
+  margin-bottom: 50px;
+}
+
+.homepage-description__title {
+  font-family: "Epilogue", sans-serif;
+  text-align: center;
+  font-size: 40px;
+  line-height: 1.2;
+  font-weight: 500;
+}
+
+.homepage-description__para {
+  font-family: "Manrope", sans-serif;
+  text-align: center;
+}
+
+.App {
+  min-height: 100vh;
+  max-width: 3020px;
 }
 
 @media screen and (min-width: 1300px) {
   .App {
-    width: 70%;
+    width: 100%;
   }
 }
 /*# sourceMappingURL=style.css.map */
