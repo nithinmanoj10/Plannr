@@ -161,7 +161,7 @@ a {
   z-index: -10;
   bottom: 0;
   width: 100%;
-  animation: 1.5s ease-out 0s 1 slideUpFromBottom;
+  animation: 4s ease-out 0s 1 homePageDesc;
 }
 
 .homepage-description {
@@ -188,17 +188,17 @@ a {
   font-size: 40px;
   line-height: 1.2;
   font-weight: 500;
-  animation: 5s ease-out 0s 1 homePageDesc;
+  animation: 4s ease-out 0s 1 homePageDesc;
 }
 
 .homepage-description__para {
   font-family: "Manrope", sans-serif;
   text-align: center;
-  animation: 5s ease-out 0s 1 homePageDesc;
+  animation: 4s ease-out 0s 1 homePageDesc;
 }
 
 .homepage-description .button {
-  animation: 5s ease-out 0s 1 homePageDesc;
+  animation: 4s ease-out 0s 1 homePageDesc;
 }
 
 @keyframes slideUpFromBottom {
@@ -234,7 +234,7 @@ a {
     opacity: 0%;
     transform: translateY(100px);
   }
-  60% {
+  75% {
     opacity: 0%;
     transform: translateY(100px);
   }

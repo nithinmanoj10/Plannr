@@ -8,7 +8,11 @@ export default function Button(props) {
 
   return (
     // eslint-disable-next-line jsx-a11y/anchor-is-valid
-    <a href="#" className={`button ${props.type}`}>
+    <a
+      href="javascript:void(0)"
+      className={`button ${props.type}`}
+      onClick={props.onClick}
+    >
       {buttonText}
     </a>
   );

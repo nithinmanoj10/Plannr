@@ -1,8 +1,16 @@
 import React from "react";
 import plannrLogo from "../../images/plannr_logo.svg";
 import Button from "../Buttons/Button";
+import { useNavigate } from "react-router-dom";
 
 function HomePageDesc() {
+  const navigate = useNavigate();
+
+  function handleClick() {
+    console.log("Hellooooo");
+    navigate("/dashboard");
+  }
+
   return (
     <div className="homepage-description">
       <img
@@ -17,7 +25,7 @@ function HomePageDesc() {
         Seamless and easy to use platform that will allow you to view your
         classes for the week
       </p>
-      <Button text="Get Started" type="button__solid" />
+      <Button text="Get Started" type="button__solid" onClick={handleClick} />
     </div>
   );
 }

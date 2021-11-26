@@ -9,7 +9,7 @@
 
     width: 100%;
 
-    animation: 1.5s ease-out 0s 1 slideUpFromBottom;
+    animation: 4s ease-out 0s 1 homePageDesc;
   }
 }
 
@@ -38,17 +38,17 @@
     font-size: 40px;
     line-height: 1.2;
     font-weight: 500;
-    animation: 5s ease-out 0s 1 homePageDesc;
+    animation: 4s ease-out 0s 1 homePageDesc;
   }
 
   &__para {
     font-family: "Manrope", sans-serif;
     text-align: center;
-    animation: 5s ease-out 0s 1 homePageDesc;
+    animation: 4s ease-out 0s 1 homePageDesc;
   }
 
   .button {
-    animation: 5s ease-out 0s 1 homePageDesc;
+    animation: 4s ease-out 0s 1 homePageDesc;
   }
 }
 
@@ -85,7 +85,7 @@
     opacity: 0%;
     transform: translateY(100px);
   }
-  60% {
+  75% {
     opacity: 0%;
     transform: translateY(100px);
   }
