@@ -22,10 +22,19 @@
       max-height: 50px;
     }
 
+    &__logout {
+      padding: 5px 10px;
+    }
+
     .user-info {
       display: flex;
       flex-direction: row;
       align-items: center;
+      justify-content: flex-end;
+
+      padding: 0 30px;
+
+      flex: 1;
 
       &__avatar {
       }

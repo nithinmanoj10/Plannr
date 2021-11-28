@@ -12,6 +12,13 @@
     background-color: var(--col-primary-dark-purple);
   }
 
+  &__nav-bar__logout {
+    padding: 5px 10px;
+    font-size: 16px;
+    color: #fff;
+    background-color: var(--col-primary-dark-purple);
+  }
+
   &:hover {
     border-color: var(--col-primary-purple);
     background-color: var(--col-primary-purple);

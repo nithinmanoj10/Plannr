@@ -31,7 +31,7 @@ function Dashboard() {
           </div>
           <div className="user-info__name">John Doe</div>
         </div>
-        <Button text="Logout" type="button__solid" />
+        <Button text="Logout" type="button__nav-bar__logout" />
       </div>
       <div className="dashboard__left-info">Calendar</div>
       <div className="dashboard__middle-info">Time Table</div>
