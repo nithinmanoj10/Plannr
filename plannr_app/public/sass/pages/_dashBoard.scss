@@ -1,0 +1,56 @@
+.dashboard {
+  &--container {
+    border: 1px solid #000;
+    height: 100vh;
+
+    display: grid;
+    grid-template-rows: 1.5fr 10fr;
+    grid-template-columns: 1fr 5fr 2fr;
+  }
+
+  &__nav-bar {
+    grid-column: 1 / 4;
+    grid-row: 1 / 2;
+
+    padding: 10px 30px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    &__logo {
+      max-height: 50px;
+    }
+
+    .user-info {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      &__avatar {
+      }
+
+      &__name {
+        margin-left: 10px;
+      }
+    }
+  }
+
+  &__left-info {
+    background-color: antiquewhite;
+    grid-column: 1 / 2;
+    grid-row: 2/3;
+  }
+
+  &__middle-info {
+    background-color: cadetblue;
+    grid-column: 2 / 3;
+    grid-row: 2/3;
+  }
+
+  &__right-info {
+    background-color: darkkhaki;
+    grid-column: 3 / 4;
+    grid-row: 2/3;
+  }
+}

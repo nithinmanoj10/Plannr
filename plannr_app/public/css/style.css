@@ -244,6 +244,55 @@ a {
   }
 }
 
+.dashboard--container {
+  border: 1px solid #000;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 1.5fr 10fr;
+  grid-template-columns: 1fr 5fr 2fr;
+}
+
+.dashboard__nav-bar {
+  grid-column: 1 / 4;
+  grid-row: 1 / 2;
+  padding: 10px 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.dashboard__nav-bar__logo {
+  max-height: 50px;
+}
+
+.dashboard__nav-bar .user-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.dashboard__nav-bar .user-info__name {
+  margin-left: 10px;
+}
+
+.dashboard__left-info {
+  background-color: antiquewhite;
+  grid-column: 1 / 2;
+  grid-row: 2/3;
+}
+
+.dashboard__middle-info {
+  background-color: cadetblue;
+  grid-column: 2 / 3;
+  grid-row: 2/3;
+}
+
+.dashboard__right-info {
+  background-color: darkkhaki;
+  grid-column: 3 / 4;
+  grid-row: 2/3;
+}
+
 .App {
   min-height: 100vh;
   max-width: 3020px;
