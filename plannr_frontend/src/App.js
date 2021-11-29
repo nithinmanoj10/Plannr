@@ -8,15 +8,14 @@ function App() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch("/members")
-      .then((res) => {
-        console.log(res);
-        return res.json();
-      })
-      .then((item) => {
-        setData(item.members);
-        console.log(data);
-      });
+    fetch("/test").then(
+        res=>res.json()
+      ).then(
+        data => {
+          setData(data)
+          console.log(data)
+        }
+      )
   }, []);
 
   return (
