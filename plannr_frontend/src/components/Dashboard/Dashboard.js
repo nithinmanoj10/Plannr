@@ -58,7 +58,7 @@ function Dashboard() {
       <div className="dashboard__middle-info">
         <TimeTable />
       </div>
-      <div className="dashboard__right-info">
+      {/* <div className="dashboard__right-info">
         <div className="student-courses">
           <h3 className="student-courses__title">Your Courses</h3>
           <ul className="student-courses__list">
@@ -79,7 +79,7 @@ function Dashboard() {
             />
           </ul>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

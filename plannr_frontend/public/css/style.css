@@ -293,6 +293,7 @@ a {
 }
 
 .dashboard__left-info {
+  animation: 1s ease-out 0s 1 sildeUpFromDown;
   grid-column: 1 / 2;
   grid-row: 2/3;
   border-right: 0.5px solid var(--col-border-light-grey);
@@ -334,8 +335,11 @@ a {
 }
 
 .dashboard__middle-info {
-  grid-column: 2 / 3;
+  grid-column: 2 / 4;
   grid-row: 2/3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .dashboard__right-info {
@@ -383,6 +387,21 @@ a {
 
 .dashboard__right-info .student-courses__list__item .course-details__name {
   color: var(--col-text-dark-grey);
+}
+
+@keyframes slideUpFromDown {
+  0% {
+    opacity: 0%;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 100%;
+    transform: translateY(0px);
+  }
+}
+
+.MuiPaper-elevation1 {
+  box-shadow: none !important;
 }
 
 .App {
