@@ -3,6 +3,7 @@
   --col-primary-purple: #4630ab;
   --col-primary-light-purple: #6669c5;
   --col-text-light-grey: #808080;
+  --col-text-dark-grey: #585858;
   --col-border-light-grey: #cccccc;
 }
 
@@ -322,12 +323,14 @@ a {
 
 .dashboard__left-info .upcoming-classes__list__item .class-name {
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 700;
+  color: var(--col-text-dark-grey);
 }
 
 .dashboard__left-info .upcoming-classes__list__item .class-time {
   font-size: 15px;
   font-weight: 500;
+  color: var(--col-text-dark-grey);
 }
 
 .dashboard__middle-info {
@@ -365,7 +368,6 @@ a {
 .dashboard__right-info .student-courses__list__item .course-color {
   height: 25px;
   width: 25px;
-  background-color: #bbb;
   border-radius: 50%;
 }
 
@@ -377,6 +379,10 @@ a {
 .dashboard__right-info .student-courses__list__item .course-details__code {
   font-size: 12px;
   color: var(--col-text-light-grey);
+}
+
+.dashboard__right-info .student-courses__list__item .course-details__name {
+  color: var(--col-text-dark-grey);
 }
 
 .App {

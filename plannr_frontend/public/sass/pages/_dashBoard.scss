@@ -73,12 +73,14 @@
 
           .class-name {
             font-size: 18px;
-            font-weight: 500;
+            font-weight: 700;
+            color: var(--col-text-dark-grey);
           }
 
           .class-time {
             font-size: 15px;
             font-weight: 500;
+            color: var(--col-text-dark-grey);
           }
         }
       }
@@ -116,7 +118,6 @@
           .course-color {
             height: 25px;
             width: 25px;
-            background-color: #bbb;
             border-radius: 50%;
           }
 
@@ -129,6 +130,7 @@
             }
 
             &__name {
+              color: var(--col-text-dark-grey);
             }
           }
         }

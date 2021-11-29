@@ -6,6 +6,8 @@ import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import Calendar from "./Calendar";
 import YourCourses from "./YourCourses";
+import UpcomingClasses from "./UpcomingClasses";
+import TimeTable from "./TimeTable";
 import { deepOrange, deepPurple } from "@mui/material/colors";
 
 function Dashboard() {
@@ -40,20 +42,22 @@ function Dashboard() {
         <div className="upcoming-classes">
           <h3 className="upcoming-classes__title">Upcoming Classes</h3>
           <ul className="upcoming-classes__list">
-            <li className="upcoming-classes__list__item">
-              <p className="class-code">CS3003D</p>
-              <h4 className="class-name">Operating Systems</h4>
-              <h4 className="class-time">8:00 AM</h4>
-            </li>
-            <li className="upcoming-classes__list__item">
-              <p className="class-code">CS3001D</p>
-              <h4 className="class-name">Theory of Computation</h4>
-              <h4 className="class-time">9:00 AM</h4>
-            </li>
+            <UpcomingClasses
+              code="CS3003D"
+              name="Operating Systems"
+              time="8:00 AM"
+            />
+            <UpcomingClasses
+              code="CS3001D"
+              name="Theory of Computation"
+              time="10:15 AM"
+            />
           </ul>
         </div>
       </div>
-      <div className="dashboard__middle-info">Time Table</div>
+      <div className="dashboard__middle-info">
+        <TimeTable />
+      </div>
       <div className="dashboard__right-info">
         <div className="student-courses">
           <h3 className="student-courses__title">Your Courses</h3>
@@ -63,22 +67,16 @@ function Dashboard() {
               code="CS3001D"
               name="Theory of Computation"
             />
-            <li className="student-courses__list__item">
-              <div className="course-details">
-                <p className="course-details__code">CS3001D</p>
-                <h4 className="course-details__name">Theory of Computation</h4>
-              </div>
-              <div className="course-color"></div>
-            </li>
-            <li className="student-courses__list__item">
-              <div className="course-details">
-                <p className="course-details__code">CS3002D</p>
-                <h4 className="course-details__name">
-                  Database and Management Systems
-                </h4>
-              </div>
-              <div className="course-color"></div>
-            </li>
+            <YourCourses
+              color="#23ef67"
+              code="CS3002D"
+              name="Database and Management Systems"
+            />
+            <YourCourses
+              color="#654321"
+              code="CS3003D"
+              name="Operating Systems"
+            />
           </ul>
         </div>
       </div>
