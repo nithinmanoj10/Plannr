@@ -1,26 +1,35 @@
 import * as React from "react";
-import isWeekend from "date-fns/isWeekend";
-import TextField from "@mui/material/TextField";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import StaticDatePicker from "@mui/lab/StaticDatePicker";
+import CalendarPicker from "@mui/lab/CalendarPicker";
 
 function Calendar() {
-  const [value, setValue] = React.useState(new Date());
+  const [date, setDate] = React.useState(new Date());
+
+  const theme = createTheme({
+    components: {
+      MuiCalendarPicker: {
+        styleOverrides: {
+          root: {
+            transform: "scale(0.9)",
+            maxHeight: "300px",
+            overflowY: "hidden",
+          },
+          viewTransitionContainer: {
+            overflowY: "hidden",
+          },
+        },
+      },
+    },
+  });
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <StaticDatePicker
-        orientation="landscape"
-        openTo="day"
-        value={value}
-        shouldDisableDate={isWeekend}
-        onChange={(newValue) => {
-          setValue(newValue);
-        }}
-        renderInput={(params) => <TextField {...params} />}
-      />
-    </LocalizationProvider>
+    <ThemeProvider theme={theme}>
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <CalendarPicker date={date} onChange={(newDate) => setDate(newDate)} />
+      </LocalizationProvider>
+    </ThemeProvider>
   );
 }
 

@@ -3,6 +3,7 @@
   --col-primary-purple: #4630ab;
   --col-primary-light-purple: #6669c5;
   --col-text-light-grey: #808080;
+  --col-border-light-grey: #cccccc;
 }
 
 *,
@@ -256,13 +257,14 @@ a {
   height: 100vh;
   display: grid;
   grid-template-rows: 1.5fr 10fr;
-  grid-template-columns: 1fr 5fr 2fr;
+  grid-template-columns: 0.5fr 6fr 2.5fr;
 }
 
 .dashboard__nav-bar {
   grid-column: 1 / 4;
   grid-row: 1 / 2;
   padding: 10px 30px;
+  border-bottom: 0.5px solid var(--col-border-light-grey);
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -290,21 +292,53 @@ a {
 }
 
 .dashboard__left-info {
-  background-color: antiquewhite;
   grid-column: 1 / 2;
   grid-row: 2/3;
+  border-right: 0.5px solid var(--col-border-light-grey);
+}
+
+.dashboard__left-info .upcoming-classes {
+  padding: 0 37px;
+}
+
+.dashboard__left-info .upcoming-classes__title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.dashboard__left-info .upcoming-classes__list {
+  list-style: none;
+}
+
+.dashboard__left-info .upcoming-classes__list__item {
+  margin-bottom: 24px;
+}
+
+.dashboard__left-info .upcoming-classes__list__item .class-code {
+  font-size: 12px;
+  color: var(--col-text-light-grey);
+}
+
+.dashboard__left-info .upcoming-classes__list__item .class-name {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.dashboard__left-info .upcoming-classes__list__item .class-time {
+  font-size: 15px;
+  font-weight: 500;
 }
 
 .dashboard__middle-info {
-  background-color: cadetblue;
   grid-column: 2 / 3;
   grid-row: 2/3;
 }
 
 .dashboard__right-info {
-  background-color: darkkhaki;
   grid-column: 3 / 4;
   grid-row: 2/3;
+  border-left: 0.5px solid var(--col-border-light-grey);
 }
 
 .App {
