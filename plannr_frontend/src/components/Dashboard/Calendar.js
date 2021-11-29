@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import CalendarPicker from "@mui/lab/CalendarPicker";
@@ -8,7 +8,20 @@ function Calendar() {
   const [date, setDate] = React.useState(new Date());
 
   const theme = createTheme({
+    palette: {
+      primary: {
+        main: "#2b0548",
+      },
+      secondary: {
+        main: "#4630ab",
+      },
+    },
     components: {
+      MuiButtonBase: {
+        styleOverrides: {
+          root: {},
+        },
+      },
       MuiCalendarPicker: {
         styleOverrides: {
           root: {

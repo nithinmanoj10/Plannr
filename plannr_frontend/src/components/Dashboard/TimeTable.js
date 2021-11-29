@@ -8,6 +8,7 @@ import {
   AppointmentTooltip,
   CurrentTimeIndicator,
 } from "@devexpress/dx-react-scheduler-material-ui";
+import { style } from "@mui/system";
 
 /*const timeTableHeight = document.getElementById(
   "dashboard__middle-info"
@@ -33,6 +34,19 @@ const appointments = [
   { title: "Send Territory Sales Breakdown", startDate: "2019-06-23T12:35" },
 ];
 
+const Appointment = ({ children, style, ...restProps }) => (
+  <Appointments.Appointment
+    {...restProps}
+    style={{
+      ...style,
+      backgroundColor: "#2b0548",
+      borderRadius: "8px",
+    }}
+  >
+    {children}
+  </Appointments.Appointment>
+);
+
 function TimeTable() {
   return (
     <Paper>
@@ -44,9 +58,9 @@ function TimeTable() {
           cellDuration={60}
           excludedDays={[0, 6]}
         />
-        <Appointments />
+        <Appointments appointmentComponent={Appointment} />
         <AppointmentTooltip />
-        <CurrentTimeIndicator shadePreviousCells={true} />
+        <CurrentTimeIndicator shadePreviousCells={false} />
       </Scheduler>
     </Paper>
   );

@@ -269,6 +269,7 @@ a {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
 }
 
 .dashboard__nav-bar__logo {
@@ -402,6 +403,10 @@ a {
 
 .MuiPaper-elevation1 {
   box-shadow: none !important;
+}
+
+.Cell-highlightedText-24 {
+  color: var(--col-primary-dark-purple) !important;
 }
 
 .App {

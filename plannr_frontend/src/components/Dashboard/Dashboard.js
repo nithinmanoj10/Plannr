@@ -27,14 +27,14 @@ function Dashboard() {
             className="dashboard__nav-bar__logo"
           />
         </a>
-        <div className="user-info">
+        {/* <div className="user-info">
           <div className="user-info__avatar">
             <Stack direction="row" spacing={2}>
               <Avatar sx={{ bgcolor: deepOrange[500] }}>JD</Avatar>
             </Stack>
           </div>
           <div className="user-info__name">John Doe</div>
-        </div>
+        </div> */}
         <Button text="Logout" type="button__nav-bar__logout" />
       </div>
       <div className="dashboard__left-info">
