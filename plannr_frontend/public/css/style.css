@@ -302,6 +302,11 @@ a {
 
 .dashboard__left-info .upcoming-classes {
   padding: 0 37px;
+  margin-top: 20px;
+}
+
+.dashboard__left-info .upcoming-classes .time-table-image {
+  height: 150px;
 }
 
 .dashboard__left-info .upcoming-classes__title {
@@ -406,6 +411,10 @@ a {
 }
 
 .Cell-highlightedText-24 {
+  color: var(--col-primary-dark-purple) !important;
+}
+
+.Cell-highlightedText-31 {
   color: var(--col-primary-dark-purple) !important;
 }
 

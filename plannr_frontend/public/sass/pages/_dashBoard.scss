@@ -55,6 +55,11 @@
 
     .upcoming-classes {
       padding: 0 37px;
+      margin-top: 20px;
+
+      .time-table-image {
+        height: 150px;
+      }
 
       &__title {
         font-size: 22px;
@@ -161,5 +166,9 @@
 }
 
 .Cell-highlightedText-24 {
+  color: var(--col-primary-dark-purple) !important;
+}
+
+.Cell-highlightedText-31 {
   color: var(--col-primary-dark-purple) !important;
 }

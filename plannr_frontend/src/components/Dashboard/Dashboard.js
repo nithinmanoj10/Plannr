@@ -9,6 +9,7 @@ import YourCourses from "./YourCourses";
 import UpcomingClasses from "./UpcomingClasses";
 import TimeTable from "./TimeTable";
 import { deepOrange, deepPurple } from "@mui/material/colors";
+import TimeTableImage from "../../images/timetable.svg";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -40,7 +41,12 @@ function Dashboard() {
       <div className="dashboard__left-info">
         <Calendar />
         <div className="upcoming-classes">
-          <h3 className="upcoming-classes__title">Upcoming Classes</h3>
+          <img
+            src={TimeTableImage}
+            className="time-table-image"
+            alt="Time Table"
+          />
+          {/* <h3 className="upcoming-classes__title">Upcoming Classes</h3>
           <ul className="upcoming-classes__list">
             <UpcomingClasses
               code="CS3003D"
@@ -52,7 +58,7 @@ function Dashboard() {
               name="Theory of Computation"
               time="10:15 AM"
             />
-          </ul>
+          </ul> */}
         </div>
       </div>
       <div className="dashboard__middle-info">

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Homepage from "./components/Homepage/Homepage";
 import Dashboard from "./components/Dashboard/Dashboard";
+import DashBoardTeacher from "./components/Dashboard/DashboardTeacher";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
 function App() {
@@ -22,7 +23,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Homepage />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/student" element={<Dashboard />} />
+          <Route path="/teacher" element={<DashBoardTeacher />} />
         </Routes>
       </BrowserRouter>
     </div>
