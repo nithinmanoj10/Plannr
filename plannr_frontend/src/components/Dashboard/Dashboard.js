@@ -5,6 +5,7 @@ import Button from "../Buttons/Button";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import Calendar from "./Calendar";
+import YourCourses from "./YourCourses";
 import { deepOrange, deepPurple } from "@mui/material/colors";
 
 function Dashboard() {
@@ -53,7 +54,34 @@ function Dashboard() {
         </div>
       </div>
       <div className="dashboard__middle-info">Time Table</div>
-      <div className="dashboard__right-info">Courses</div>
+      <div className="dashboard__right-info">
+        <div className="student-courses">
+          <h3 className="student-courses__title">Your Courses</h3>
+          <ul className="student-courses__list">
+            <YourCourses
+              color="#000"
+              code="CS3001D"
+              name="Theory of Computation"
+            />
+            <li className="student-courses__list__item">
+              <div className="course-details">
+                <p className="course-details__code">CS3001D</p>
+                <h4 className="course-details__name">Theory of Computation</h4>
+              </div>
+              <div className="course-color"></div>
+            </li>
+            <li className="student-courses__list__item">
+              <div className="course-details">
+                <p className="course-details__code">CS3002D</p>
+                <h4 className="course-details__name">
+                  Database and Management Systems
+                </h4>
+              </div>
+              <div className="course-color"></div>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   );
 }

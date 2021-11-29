@@ -341,6 +341,44 @@ a {
   border-left: 0.5px solid var(--col-border-light-grey);
 }
 
+.dashboard__right-info .student-courses {
+  padding: 25px;
+}
+
+.dashboard__right-info .student-courses__title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.dashboard__right-info .student-courses__list {
+  list-style: none;
+}
+
+.dashboard__right-info .student-courses__list__item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.dashboard__right-info .student-courses__list__item .course-color {
+  height: 25px;
+  width: 25px;
+  background-color: #bbb;
+  border-radius: 50%;
+}
+
+.dashboard__right-info .student-courses__list__item .course-details {
+  padding: 0 5px;
+  flex: 60%;
+}
+
+.dashboard__right-info .student-courses__list__item .course-details__code {
+  font-size: 12px;
+  color: var(--col-text-light-grey);
+}
+
 .App {
   min-height: 100vh;
   max-width: 3020px;

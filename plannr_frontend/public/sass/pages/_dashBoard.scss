@@ -94,5 +94,45 @@
     grid-column: 3 / 4;
     grid-row: 2/3;
     border-left: 0.5px solid var(--col-border-light-grey);
+
+    .student-courses {
+      padding: 25px;
+
+      &__title {
+        font-size: 22px;
+        font-weight: 700;
+        margin-bottom: 20px;
+      }
+
+      &__list {
+        list-style: none;
+        &__item {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+
+          margin-bottom: 20px;
+
+          .course-color {
+            height: 25px;
+            width: 25px;
+            background-color: #bbb;
+            border-radius: 50%;
+          }
+
+          .course-details {
+            padding: 0 5px;
+            flex: 60%;
+            &__code {
+              font-size: 12px;
+              color: var(--col-text-light-grey);
+            }
+
+            &__name {
+            }
+          }
+        }
+      }
+    }
   }
 }
