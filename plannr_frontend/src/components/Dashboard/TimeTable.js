@@ -22,16 +22,25 @@ const appointments = [
     endDate: "2021-11-29T10:00",
   },
   {
-    title: "Mail New Leads for Follow Up",
-    startDate: "2019-06-23T10:00",
-    endDate: "2019-06-23T11:00",
+    title: "Database and Management Systems",
+    startDate: "2021-11-29T10:15",
+    endDate: "2021-11-29T11:15",
   },
   {
-    title: "Product Meeting",
-    startDate: "2019-06-23T08:00",
-    endDate: "2019-06-23T09:00",
+    title: "OS Lab",
+    startDate: "2021-11-29T14:00",
+    endDate: "2021-11-29T17:00",
   },
-  { title: "Send Territory Sales Breakdown", startDate: "2019-06-23T12:35" },
+  {
+    title: "Theory of Computation",
+    startDate: "2021-11-30T12:00",
+    endDate: "2021-11-30T13:00",
+  },
+  {
+    title: "Engineering Economics",
+    startDate: "2021-11-30T15:00",
+    endDate: "2021-11-30T16:00",
+  },
 ];
 
 const Appointment = ({ children, style, ...restProps }) => (
