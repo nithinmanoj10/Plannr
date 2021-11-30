@@ -1,14 +1,16 @@
 from flask import Flask, jsonify
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
+import os
 
 app = Flask(__name__)
 
 def connectDB_TEST():
-    engine = create_engine("postgresql://postgres:Alan200!@localhost:5432/plannr")
+    engine = create_engine(f"postgresql://postgres:{os.environ.get('emailPass')}@localhost:5432/plannr")
     db = scoped_session(sessionmaker(bind=engine))
-    db.execute("CREATE TABLE TEST (id INTEGER NOT NULL, name VARCHAR, PRIMARY KEY (id));")
+    db.execute("CREATE TABLE IF NOT EXISTS TEST2 (id INTEGER NOT NULL, name VARCHAR, PRIMARY KEY (id));")
     db.commit()
+    print(os.environ.get('emailPass'))
     db.close()
 
 @app.route("/test")
