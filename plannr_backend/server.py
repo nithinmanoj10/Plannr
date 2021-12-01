@@ -393,11 +393,57 @@ def addSlot():
 
 # start of 'get all slots of a class' functionality
 
+def slotsOfClass(userClass):
+    db = scoped_session(sessionmaker(bind=engine))
+    result = {}
+
+    try:
+        with engine.connect() as conn:
+            retVal = conn.execute(f'''
+                                    SELECT * FROM slots
+                                    WHERE class = '{userClass}';
+                                ''')   
+            for row in retVal:
+                teacherName = ""
+                subjectName = ""
+                ret1 = conn.execute(f'''
+                                        SELECT name FROM users
+                                        WHERE userid={row[5]};
+                                    ''')
+                for row1 in ret1:
+                    teacherName = row1[0]
+                
+                ret2 = conn.execute(f'''
+                                        SELECT subjectName FROM subjects
+                                        WHERE subjectid={row[1]};
+                                    ''')
+                for row2 in ret2:
+                    subjectName = row2[0]
+
+                details = [subjectName, row[2], row[3], teacherName]
+                result[f"{row[0]}"] = details
+        
+        result["status"] = "success"
+
+    except exc.SQLAlchemyError as e:
+        print(type(e))
+        print(e)
+        result = {"status": "failure"}
+
+    return result
+
+
 @app.route("/getSlots")
 def getSlot():
     userClass = request.args.get('class', type = str, default='empty').replace('"','')
 
-    result = {}
+    if userClass == "empty":
+        result = {"status": "invalidArg"}
+    else:
+        result = slotsOfClass(userClass)
+    
+    print(result)
+    return jsonify(result)
 
 if __name__ == "__main__":
     app.run(debug=True)
