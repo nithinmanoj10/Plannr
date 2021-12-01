@@ -41,10 +41,6 @@ def test():
 # start of functionality for 'signupStudent' 
 
 def signupStudentCreateTable():
-<<<<<<< HEAD
-    engine = create_engine(f"postgresql://postgres:nithin@localhost:5432/plannr")
-=======
->>>>>>> e5f0ffbbfd1b899a8f19613e66469abd796ca7ab
     db = scoped_session(sessionmaker(bind=engine))
     
     db.execute('''
@@ -76,11 +72,6 @@ def signupStudentCreateTable():
     db.close()
 
 def signupInsertStudent(userRegNo, userName, userPassHash, userDOB, userEmail, userMobNo, userClass):
-<<<<<<< HEAD
-    engine = create_engine(f"postgresql://postgres:nithin@localhost:5432/plannr")
-    conn = engine.connect()
-=======
->>>>>>> e5f0ffbbfd1b899a8f19613e66469abd796ca7ab
     db = scoped_session(sessionmaker(bind=engine))
 
     result = "_ _"
