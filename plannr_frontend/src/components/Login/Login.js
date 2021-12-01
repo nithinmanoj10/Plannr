@@ -1,6 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import loginImg from "./LoginImg.svg";
+
 function Login() {
+  const navigate = useNavigate();
+
+  const [regNo, setRegNo] = useState("");
+  const [password, setPassword] = useState("");
+
+  // function that handles the submit button
+  // for the login form. Uses the fetch() function
+  // to get the required values from server.py
+  function handleSubmit() {
+    const urlLoginStudent = `/loginStudent?regNo="${regNo}"&pass="${password}"`;
+
+    fetch(urlLoginStudent)
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+
+        const { batch, email, name, regNo, status } = data;
+
+        if (status === "invalidArg") alert("Please enter all the details");
+        if (status === "failure") alert("Error in Logging In");
+        if (status === "wrongPass") alert("Wrong Password");
+        if (status === "success") navigate(`/student/${regNo}`);
+      });
+  }
+
+  // function that gets the regNo value
+  function handleRegNo(e) {
+    setRegNo(e.target.value);
+  }
+
+  // function that gets the password value
+  function handlePassword(e) {
+    setPassword(e.target.value);
+  }
+
   return (
     <div className="parent">
       <div className="image">
@@ -9,11 +48,12 @@ function Login() {
       <div className="container">
         <div className="header">Login</div>
         <div className="form-group">
-          <label>UserName: </label>
+          <label>Registration Number </label>
           <input
-            placeholder="username"
+            placeholder="Registration Number"
             type="text"
             className="input-field"
+            onChange={handleRegNo}
           ></input>
         </div>
         <div className="form-group">
@@ -22,16 +62,21 @@ function Login() {
             placeholder="password"
             type="password"
             className="input-field"
+            onChange={handlePassword}
           ></input>
         </div>
         <div className="buttondiv">
-          <button type="submit">Submit</button>
+          <button type="submit" onClick={handleSubmit}>
+            Submit
+          </button>
         </div>
 
-        <a href="#" className="signup">
+        <a href="javascript:void(0)" className="signup">
           Dont have an account? Register Here
         </a>
       </div>
+      {/* <p>{regNo}</p>
+      <p>{password}</p> */}
     </div>
   );
 }

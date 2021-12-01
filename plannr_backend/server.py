@@ -9,7 +9,6 @@ app = Flask(__name__)
 bcrypt = Bcrypt(app)
 
 engine = create_engine(f"postgresql://postgres:{os.environ.get('psqlPass')}@localhost:5432/plannr")
-
 # start of functionality for 'test' method
 
 # uncomment what you want to test here
@@ -219,7 +218,7 @@ def validateStudentLogin(userRegNo, userPass, result):
                             WHERE studentid = '{userid}';                   
                         ''')
             for row in returnVal:
-                result["class"] = row[0]
+                result["batch"] = row[0]
 
             result["status"] = "success"
 
@@ -239,7 +238,7 @@ def loginStudent():
 
     result = { "regNo": f"{userRegNo}", "name": "empty", "email": "empty", "class": "empty", "status": "empty" }
 
-    if "empty" in [userRegNo, userPass]:
+    if "" in [userRegNo, userPass]:
         result["status"]="invalidArg"
     else:
         result["status"]="_"
@@ -290,7 +289,7 @@ def loginTeacher():
 
     result = { "teacherID":0, "regNo": f"{userRegNo}", "name": "empty", "email": "empty", "status": "empty" }
 
-    if "empty" in [userRegNo, userPass]:
+    if "" in [userRegNo, userPass]:
         result["status"]="invalidArg"
     else:
         result["status"]="_"

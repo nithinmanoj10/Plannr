@@ -38,6 +38,10 @@ function Signup() {
     console.log(urlSignUpStudent);
   }
 
+  // go to login page if already signed up
+  function handleAlreadyRegistered() {
+    navigate("/login");
+  }
   // function to get the Registration Number value
   function handleRegNo(e) {
     setRegNo(e.target.value);
@@ -172,7 +176,11 @@ function Signup() {
         <a href="#" className="signup">
           Sign Up - Faculty
         </a>
-        <a href="#" className="signup">
+        <a
+          href="javascript:void(0)"
+          className="signup"
+          onClick={handleAlreadyRegistered}
+        >
           Already have an account? Login Here
         </a>
       </div>
