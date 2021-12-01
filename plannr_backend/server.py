@@ -39,7 +39,7 @@ def test():
 # start of functionality for 'signupStudent' 
 
 def signupStudentCreateTable():
-    engine = create_engine(f"postgresql://postgres:{os.environ.get('emailPass')}@localhost:5432/plannr")
+    engine = create_engine(f"postgresql://postgres:nithin@localhost:5432/plannr")
     db = scoped_session(sessionmaker(bind=engine))
     
     db.execute('''
@@ -70,7 +70,7 @@ def signupStudentCreateTable():
     db.close()
 
 def signupInsertStudent(userRegNo, userName, userPassHash, userDOB, userEmail, userMobNo, userClass):
-    engine = create_engine(f"postgresql://postgres:{os.environ.get('emailPass')}@localhost:5432/plannr")
+    engine = create_engine(f"postgresql://postgres:nithin@localhost:5432/plannr")
     conn = engine.connect()
     db = scoped_session(sessionmaker(bind=engine))
 

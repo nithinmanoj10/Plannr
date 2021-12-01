@@ -2,6 +2,7 @@
   --col-primary-dark-purple: #2b0548;
   --col-primary-purple: #4630ab;
   --col-primary-light-purple: #6669c5;
+  --col-primary-transparent-purple: #faf5ff;
   --col-text-light-grey: #808080;
   --col-text-dark-grey: #585858;
   --col-border-light-grey: #cccccc;
@@ -532,6 +533,33 @@ button:active {
   text-align: left;
   color: #6669c5;
   text-decoration: none;
+}
+
+.signup-page {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+}
+
+.signup-page__picture-section {
+  grid-column: 1 / 2;
+  background-color: var(--col-primary-transparent-purple);
+  padding: 50px 50px;
+}
+
+.signup-page__picture-section__name .plannr-name {
+  height: 30px;
+}
+
+.signup-page__picture-section__name .plannr-tag {
+  color: var(--col-primary-purple);
+  opacity: 50%;
+  width: 170px;
+  margin-top: 10px;
+}
+
+.signup-page__form-section {
+  grid-column: 2 / 3;
 }
 
 .App {

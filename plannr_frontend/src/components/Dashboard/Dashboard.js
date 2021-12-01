@@ -28,7 +28,11 @@ function Dashboard() {
             className="dashboard__nav-bar__logo"
           />
         </a>
-        <Button text="Logout" type="button__nav-bar__logout" />
+        <Button
+          text="Logout"
+          type="button__nav-bar__logout"
+          onClick={handleClick}
+        />
       </div>
       <div className="dashboard__left-info">
         <Calendar />
