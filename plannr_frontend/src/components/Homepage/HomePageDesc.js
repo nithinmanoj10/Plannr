@@ -8,7 +8,7 @@ function HomePageDesc() {
 
   function handleClick() {
     console.log("Hellooooo");
-    navigate("/student");
+    navigate("/signup-student");
   }
 
   return (

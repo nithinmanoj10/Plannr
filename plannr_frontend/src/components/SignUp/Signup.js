@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import SignupImg from "./SignupImg.svg";
 function Signup() {
+  const navigate = useNavigate();
+
   const [regNo, setRegNo] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -29,7 +32,7 @@ function Signup() {
         if (result === "failure")
           alert("There was an error in creating an account");
 
-        console.log(result);
+        if (result === "success") navigate("/login");
       });
 
     console.log(urlSignUpStudent);
