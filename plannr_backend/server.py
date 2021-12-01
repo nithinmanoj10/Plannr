@@ -50,7 +50,7 @@ def signupStudentCreateTable():
                     Name VARCHAR NOT NULL,
                     PasswordHash VARCHAR NOT NULL,
                     DateOfBirth DATE,
-                    Email VARCHAR,
+                    Email VARCHAR UNIQUE,
                     MobileNo VARCHAR,
                     Role VARCHAR
                     );
@@ -200,7 +200,7 @@ def validateStudentLogin(userRegNo, userPass, result):
         with engine.connect() as conn:
             returnVal = conn.execute(f'''
                             SELECT * FROM users
-                            WHERE RegNo = '{userRegNo}';                   
+                            WHERE RegNo = '{userRegNo}' AND Role = 'S';                   
                         ''')
             for row in returnVal:
                 userid = row[0]
@@ -242,8 +242,59 @@ def loginStudent():
         result["status"]="invalidArg"
     else:
         result["status"]="_"
-        signupTeacherCreateTable()  # to ensure student tables already exist
+        signupStudentCreateTable()  # to ensure student tables already exist
         result = validateStudentLogin(userRegNo, userPass, result)
+
+    return jsonify(result)
+
+# start of functionality for 'teacher login'
+
+def validateTeacherLogin(userRegNo, userPass, result):
+    conn = engine.connect()
+    db = scoped_session(sessionmaker(bind=engine))
+
+    result["status"] = "_ _"
+    
+    try:
+        with engine.connect() as conn:
+            returnVal = conn.execute(f'''
+                            SELECT * FROM users
+                            WHERE RegNo = '{userRegNo}' AND Role = 'T';                   
+                        ''')
+            for row in returnVal:
+                pw_hash = row[3]
+                
+                if bcrypt.check_password_hash(pw_hash, userPass)==False:
+                    result["status"] = "wrongPass"
+                    return result
+                
+                result["name"] = row[2]
+                result["email"] = row[5]
+
+            result["status"] = "success"
+
+    except exc.SQLAlchemyError as e:
+        print(type(e))
+        result["status"] = "failure"
+
+    db.commit()
+    db.close()
+
+    return result
+
+@app.route("/loginTeacher")
+def loginTeacher():
+    userRegNo = request.args.get('regNo', type = str, default='empty').replace('"','')
+    userPass = request.args.get('pass', type = str, default='empty').replace('"','')
+
+    result = { "regNo": f"{userRegNo}", "name": "empty", "email": "empty", "status": "empty" }
+
+    if "empty" in [userRegNo, userPass]:
+        result["status"]="invalidArg"
+    else:
+        result["status"]="_"
+        signupTeacherCreateTable()  # to ensure teacher tables already exist
+        result = validateTeacherLogin(userRegNo, userPass, result)
 
     return jsonify(result)
 
