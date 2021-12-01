@@ -1,0 +1,30 @@
+.signup-page {
+  min-height: 100vh;
+
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+
+  &__picture-section {
+    grid-column: 1 / 2;
+    background-color: var(--col-primary-transparent-purple);
+
+    padding: 50px 50px;
+
+    &__name {
+      .plannr-name {
+        height: 30px;
+      }
+
+      .plannr-tag {
+        color: var(--col-primary-purple);
+        opacity: 50%;
+        width: 170px;
+        margin-top: 10px;
+      }
+    }
+  }
+
+  &__form-section {
+    grid-column: 2 / 3;
+  }
+}
