@@ -93,6 +93,7 @@ def signupInsertStudent(userRegNo, userName, userPassHash, userDOB, userEmail, u
                         ''')
             result = "success"
     except exc.SQLAlchemyError as e:
+        print('Eroorr: ')
         print(type(e))
         result = "failure"
 
@@ -113,7 +114,9 @@ def signupStudent():
 
     result = ""
 
-    if "empty" in [userRegNo, userName, userPass, userDOB, userEmail, userMobNo, userClass]:
+    # print(userRegNo, userName, userPass, userDOB, userEmail, userMobNo, userClass)
+
+    if '' in [userRegNo, userName, userPass, userDOB, userEmail, userMobNo, userClass]:
         result="invalidArg"
     else:
         result = "_"

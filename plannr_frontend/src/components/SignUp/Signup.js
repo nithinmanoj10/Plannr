@@ -1,6 +1,77 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import SignupImg from "./SignupImg.svg";
 function Signup() {
+  const navigate = useNavigate();
+
+  const [regNo, setRegNo] = useState("");
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [DOB, setDOB] = useState("");
+  const [mobileNumber, setMobileNumber] = useState("");
+  const [batch, setBatch] = useState("A");
+
+  // function that handles the click of the form submit button
+  // calls the Student Signup Backend
+  function handleSubmit() {
+    const urlSignUpStudent = `/signupStudent?regNo="${regNo}"&name="${name}"&pass="${password}"&dob="${DOB}"&email="${email}"&mobNo="${mobileNumber}"&class="${batch}"`;
+
+    fetch(urlSignUpStudent)
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        const { result } = data;
+
+        console.log(typeof result);
+
+        if (result === "invalidArg")
+          alert("Please enter all the details to sign up successfully");
+
+        if (result === "failure")
+          alert("There was an error in creating an account");
+
+        if (result === "success") navigate("/login");
+      });
+
+    console.log(urlSignUpStudent);
+  }
+
+  // function to get the Registration Number value
+  function handleRegNo(e) {
+    setRegNo(e.target.value);
+  }
+
+  // function to get the Name value
+  function handleName(e) {
+    setName(e.target.value);
+  }
+
+  // function to get the Password value
+  function handlePassword(e) {
+    setPassword(e.target.value);
+  }
+  // function to get the Email value
+  function handleEmail(e) {
+    setEmail(e.target.value);
+  }
+
+  // function to get the DOB value
+  function handleDOB(e) {
+    setDOB(e.target.value);
+  }
+
+  // function to get the Mobile Number value
+  function handleMobile(e) {
+    setMobileNumber(e.target.value);
+  }
+
+  // function to get the Batch value
+  function handleBatch(e) {
+    setBatch(e.target.value);
+  }
+
   return (
     <div className="parent">
       <div className="image">
@@ -9,15 +80,28 @@ function Signup() {
       <div className="container">
         <div className="header">Sign Up - Student</div>
         <div className="form-group">
-          <label>UserId: </label>
+          <label>RegNo: </label>
           <input
-            name="userId"
-            placeholder="userId"
+            name="regNo"
+            placeholder="Registration Number"
             type="text"
             className="input-field"
             required
+            onChange={handleRegNo}
           ></input>
         </div>
+        <div className="form-group">
+          <label>Name: </label>
+          <input
+            name="name"
+            placeholder="Name"
+            type="text"
+            className="input-field"
+            required
+            onChange={handleName}
+          ></input>
+        </div>
+
         <div className="form-group">
           <label>Password: </label>
           <input
@@ -25,10 +109,10 @@ function Signup() {
             placeholder="password"
             type="password"
             className="input-field"
+            onChange={handlePassword}
             required
           ></input>
         </div>
-
         <div className="form-group">
           <label>Email: </label>
           <input
@@ -36,6 +120,7 @@ function Signup() {
             placeholder="email"
             type="text"
             className="input-field"
+            onChange={handleEmail}
             required
           ></input>
         </div>
@@ -46,6 +131,7 @@ function Signup() {
             placeholder="DateOfBirth"
             type="text"
             className="input-field"
+            onChange={handleDOB}
             required
           ></input>
         </div>
@@ -56,6 +142,7 @@ function Signup() {
             placeholder="MobileNumber"
             type="text"
             className="input-field"
+            onChange={handleMobile}
             required
           ></input>
         </div>
@@ -65,6 +152,7 @@ function Signup() {
             name="batch"
             className="input-field"
             placeholder="batch"
+            onChange={handleBatch}
             required
           >
             <option value="A">A</option>
@@ -77,7 +165,9 @@ function Signup() {
           </select>
         </div>
         <div className="buttondiv">
-          <button type="submit">Submit</button>
+          <button type="submit" onClick={handleSubmit}>
+            Submit
+          </button>
         </div>
         <a href="#" className="signup">
           Sign Up - Faculty
@@ -86,6 +176,13 @@ function Signup() {
           Already have an account? Login Here
         </a>
       </div>
+      {/* <p>{regNo}</p>
+      <p>{name}</p>
+      <p>{password}</p>
+      <p>{email}</p>
+      <p>{DOB}</p>
+      <p>{mobileNumber}</p>
+      <p>{batch}</p> */}
     </div>
   );
 }
