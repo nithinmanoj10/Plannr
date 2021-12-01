@@ -46,7 +46,7 @@ def signupStudentCreateTable():
     db.execute('''
                 CREATE TABLE IF NOT EXISTS USERS (
                     UserId SERIAL PRIMARY KEY,
-                    RegNo VARCHAR NOT NULL,
+                    RegNo VARCHAR UNIQUE NOT NULL,
                     Name VARCHAR NOT NULL,
                     PasswordHash VARCHAR NOT NULL,
                     DateOfBirth DATE,
@@ -388,6 +388,14 @@ def addSlot():
         result["status"] = insertSlot(subjectName, slotNo, day, slotClass, teacherID)
     
     return jsonify(result)
+
+# start of 'get all slots of a class' functionality
+
+@app.route("/getSlots")
+def getSlot():
+    userClass = request.args.get('class', type = str, default='empty').replace('"','')
+
+    result = {}
 
 if __name__ == "__main__":
     app.run(debug=True)
