@@ -8,6 +8,8 @@ from flask_bcrypt import Bcrypt
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
 
+engine = create_engine(f"postgresql://postgres:{os.environ.get('psqlPass')}@localhost:5432/plannr")
+
 # start of functionality for 'test' method
 
 # uncomment what you want to test here
@@ -39,7 +41,6 @@ def test():
 # start of functionality for 'signupStudent' 
 
 def signupStudentCreateTable():
-    engine = create_engine(f"postgresql://postgres:{os.environ.get('emailPass')}@localhost:5432/plannr")
     db = scoped_session(sessionmaker(bind=engine))
     
     db.execute('''
@@ -50,7 +51,8 @@ def signupStudentCreateTable():
                     PasswordHash VARCHAR NOT NULL,
                     DateOfBirth DATE,
                     Email VARCHAR,
-                    MobileNo VARCHAR
+                    MobileNo VARCHAR,
+                    Role VARCHAR
                     );
                 ''')
     db.commit()
@@ -70,18 +72,16 @@ def signupStudentCreateTable():
     db.close()
 
 def signupInsertStudent(userRegNo, userName, userPassHash, userDOB, userEmail, userMobNo, userClass):
-    engine = create_engine(f"postgresql://postgres:{os.environ.get('emailPass')}@localhost:5432/plannr")
-    conn = engine.connect()
     db = scoped_session(sessionmaker(bind=engine))
 
-    result = "__"
+    result = "_ _"
     userid = -1     # -ve value check will cause error if insert into student is done with -ve userid
 
     try:
         with engine.connect() as conn:
             returnVal = conn.execute(f'''
-                            INSERT INTO users (RegNo, Name, PasswordHash, DateOfBirth, Email, MobileNo)
-                            VALUES ('{userRegNo}', '{userName}', '{userPassHash}', '{userDOB}', '{userEmail}', '{userMobNo}')
+                            INSERT INTO users (RegNo, Name, PasswordHash, DateOfBirth, Email, MobileNo, Role)
+                            VALUES ('{userRegNo}', '{userName}', '{userPassHash}', '{userDOB}', '{userEmail}', '{userMobNo}', 'S')
                             RETURNING userid;                    
                         ''')
             for row in returnVal:
@@ -121,6 +121,71 @@ def signupStudent():
         userPassHash = bcrypt.generate_password_hash(userPass).decode("utf-8")
         signupStudentCreateTable()
         result = signupInsertStudent(userRegNo, userName, userPassHash, userDOB, userEmail, userMobNo, userClass)
+
+    return jsonify({ "result" : f"{result}" })
+
+
+# start of functionality for 'signupTeacher'
+
+def signupTeacherCreateTable():
+    db = scoped_session(sessionmaker(bind=engine))
+    
+    db.execute('''
+                CREATE TABLE IF NOT EXISTS USERS (
+                    UserId SERIAL PRIMARY KEY,
+                    RegNo VARCHAR NOT NULL,
+                    Name VARCHAR NOT NULL,
+                    PasswordHash VARCHAR NOT NULL,
+                    DateOfBirth DATE,
+                    Email VARCHAR,
+                    MobileNo VARCHAR,
+                    Role VARCHAR
+                    );
+                ''')
+    db.commit()
+    db.close()
+
+def signupInsertTeacher(userRegNo, userName, userPassHash, userDOB, userEmail, userMobNo):
+    conn = engine.connect()
+    db = scoped_session(sessionmaker(bind=engine))
+
+    result = "_ _"
+
+    try:
+        with engine.connect() as conn:
+            conn.execute(f'''
+                            INSERT INTO users (RegNo, Name, PasswordHash, DateOfBirth, Email, MobileNo, Role)
+                            VALUES ('{userRegNo}', '{userName}', '{userPassHash}', '{userDOB}', '{userEmail}', '{userMobNo}', 'T');                    
+                        ''')
+            result = "success"
+    except exc.SQLAlchemyError as e:
+        print(type(e))
+        result = "failure"
+
+    db.commit()
+    db.close()
+
+    return result
+
+@app.route("/signupTeacher")
+def signupTeacher():
+
+    userRegNo = request.args.get('regNo', type = str, default='empty').replace('"','')
+    userName = request.args.get('name', type = str, default='empty').replace('"','')
+    userPass = request.args.get('pass', type = str, default='empty').replace('"','')
+    userDOB = request.args.get('dob', type = str, default='empty').replace('"','')
+    userEmail = request.args.get('email', type = str, default='empty').replace('"','')
+    userMobNo = request.args.get('mobNo', type = str, default='empty').replace('"','')
+
+    result = ""
+
+    if "empty" in [userRegNo, userName, userPass, userDOB, userEmail, userMobNo]:
+        result="invalidArg"
+    else:
+        result = "_"
+        userPassHash = bcrypt.generate_password_hash(userPass).decode("utf-8")
+        signupTeacherCreateTable()
+        result = signupInsertTeacher(userRegNo, userName, userPassHash, userDOB, userEmail, userMobNo)
 
     return jsonify({ "result" : f"{result}" })
 
