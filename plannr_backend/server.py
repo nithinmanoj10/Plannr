@@ -46,7 +46,7 @@ def signupStudentCreateTable():
     db.execute('''
                 CREATE TABLE IF NOT EXISTS USERS (
                     UserId SERIAL PRIMARY KEY,
-                    RegNo VARCHAR NOT NULL,
+                    RegNo VARCHAR UNIQUE NOT NULL,
                     Name VARCHAR NOT NULL,
                     PasswordHash VARCHAR NOT NULL,
                     DateOfBirth DATE,
@@ -148,7 +148,6 @@ def signupTeacherCreateTable():
     db.close()
 
 def signupInsertTeacher(userRegNo, userName, userPassHash, userDOB, userEmail, userMobNo):
-    conn = engine.connect()
     db = scoped_session(sessionmaker(bind=engine))
 
     result = "_ _"
@@ -193,7 +192,6 @@ def signupTeacher():
 # start of functionality for 'student login'
 
 def validateStudentLogin(userRegNo, userPass, result):
-    conn = engine.connect()
     db = scoped_session(sessionmaker(bind=engine))
 
     result["status"] = "_ _"
@@ -253,7 +251,6 @@ def loginStudent():
 # start of functionality for 'teacher login'
 
 def validateTeacherLogin(userRegNo, userPass, result):
-    conn = engine.connect()
     db = scoped_session(sessionmaker(bind=engine))
 
     result["status"] = "_ _"
@@ -271,6 +268,7 @@ def validateTeacherLogin(userRegNo, userPass, result):
                     result["status"] = "wrongPass"
                     return result
                 
+                result["teacherID"] = row[0]
                 result["name"] = row[2]
                 result["email"] = row[5]
 
@@ -290,7 +288,7 @@ def loginTeacher():
     userRegNo = request.args.get('regNo', type = str, default='empty').replace('"','')
     userPass = request.args.get('pass', type = str, default='empty').replace('"','')
 
-    result = { "regNo": f"{userRegNo}", "name": "empty", "email": "empty", "status": "empty" }
+    result = { "teacherID":0, "regNo": f"{userRegNo}", "name": "empty", "email": "empty", "status": "empty" }
 
     if "empty" in [userRegNo, userPass]:
         result["status"]="invalidArg"
@@ -301,6 +299,106 @@ def loginTeacher():
 
     return jsonify(result)
 
+# start of functionality for 'add slot'
+
+def createSubjectSlotTable():
+    db = scoped_session(sessionmaker(bind=engine))
+    
+    db.execute('''
+                CREATE TABLE IF NOT EXISTS SUBJECTS (
+                    SubjectId SERIAL PRIMARY KEY,
+                    SubjectName VARCHAR NOT NULL
+                    );
+                ''')
+    db.commit()
+
+    db.execute('''
+                CREATE TABLE IF NOT EXISTS SLOTS (
+                    SlotId SERIAL PRIMARY KEY,
+                    SubjectID INTEGER NOT NULL,
+                    Slot INTEGER NOT NULL,
+                    Day INTEGER NOT NULL,
+                    Class VARCHAR NOT NULL,
+                    TeacherID INTEGER NOT NULL,
+                    CONSTRAINT subID
+                        FOREIGN KEY(SubjectID)
+                            REFERENCES subjects(subjectId)
+                            ON DELETE CASCADE,
+                    CONSTRAINT teachID
+                        FOREIGN KEY(TeacherID)
+                            REFERENCES users(userId)
+                            ON DELETE CASCADE
+                    );
+                ''')
+    db.commit()
+
+    db.close()
+
+def insertSlot(subjectName, slotNo, day, slotClass, teacherID):
+    db = scoped_session(sessionmaker(bind=engine))
+    status="_ _"
+    subid=-7
+
+    try:
+        retVal = db.execute(f'''
+                                SELECT * FROM Subjects
+                                WHERE SubjectName = '{subjectName}';
+                            ''')
+        for row in retVal:
+            subid = row[0]
+        
+        if subid==-7:
+            with engine.connect() as conn:
+                retVal = conn.execute(f'''
+                            INSERT INTO subjects (subjectName)
+                            VALUES ('{subjectName}')
+                            RETURNING *;
+                        ''')
+                for row in retVal:
+                    subid = row[0]
+        
+        with engine.connect() as conn:
+            conn.execute(f'''
+                        INSERT INTO slots (subjectID, Slot, Day, Class, teacherID)
+                        VALUES ({subid}, {slotNo}, {day}, '{slotClass}', {teacherID});
+                    ''')
+            status="success"
+
+    except exc.SQLAlchemyError as e:
+            print(type(e))
+            print(e)
+            status = "failure"
+
+    return status
+
+@app.route("/addSlot")
+def addSlot():
+    subjectName = request.args.get('subjectName', type = str, default='empty').replace('"','')
+    slotNo = request.args.get('slotNo', type = int, default=-1)
+    day = request.args.get('day', type = int, default=-1)
+    slotClass = request.args.get('slotClass', type = str, default='empty').replace('"','')
+    teacherID = request.args.get('teacherID', type = int, default=-1)
+
+    result = {}
+
+    if "empty" in [subjectName, slotClass]:
+        result["status"]="invalidArg"
+    elif -1 in [slotNo, day, teacherID]:
+        result["status"]="invalidArg"
+    else:
+        result["status"]="_"
+        createSubjectSlotTable()
+        result["status"] = insertSlot(subjectName, slotNo, day, slotClass, teacherID)
+    
+    return jsonify(result)
+
+# start of 'get all slots of a class' functionality
+
+@app.route("/getSlots")
+def getSlot():
+    userClass = request.args.get('class', type = str, default='empty').replace('"','')
+
+    result = {}
 
 if __name__ == "__main__":
     app.run(debug=True)
