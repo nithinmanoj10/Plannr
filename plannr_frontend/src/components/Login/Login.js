@@ -1,3 +1,4 @@
+import { flexbox } from "@mui/system";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import loginImg from "./LoginImg.svg";
@@ -12,22 +13,44 @@ function Login() {
   // for the login form. Uses the fetch() function
   // to get the required values from server.py
   function handleSubmit() {
-    const urlLoginStudent = `/loginStudent?regNo="${regNo}"&pass="${password}"`;
+    const isTeacher = regNo[0] === "P" && regNo[1] === "R" ? true : false;
 
-    fetch(urlLoginStudent)
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data);
+    if (isTeacher === true) {
+      console.log("Teacher Logging In");
+      const urlLoginTeacher = `/loginTeacher?regNo="${regNo}"&pass="${password}"`;
 
-        const { batch, email, name, regNo, status } = data;
+      fetch(urlLoginTeacher)
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          const { regNo, name, email, status, teacherID } = data;
 
-        if (status === "invalidArg") alert("Please enter all the details");
-        if (status === "failure") alert("Error in Logging In");
-        if (status === "wrongPass") alert("Wrong Password");
-        if (status === "success") navigate(`/student/${regNo}`);
-      });
+          if (status === "invalidArg") alert("Please enter all the details");
+          if (status === "failure") alert("Error in Logging In");
+          if (status === "wrongPass") alert("Wrong Password");
+          if (status === "success") navigate(`/teacher/${regNo}/${teacherID}`);
+        });
+    }
+
+    if (isTeacher === false) {
+      const urlLoginStudent = `/loginStudent?regNo="${regNo}"&pass="${password}"`;
+
+      fetch(urlLoginStudent)
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          console.log(data);
+
+          const { batch, email, name, regNo, status } = data;
+
+          if (status === "invalidArg") alert("Please enter all the details");
+          if (status === "failure") alert("Error in Logging In");
+          if (status === "wrongPass") alert("Wrong Password");
+          if (status === "success") navigate(`/student/${regNo}`);
+        });
+    }
   }
 
   // function that gets the regNo value
