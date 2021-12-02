@@ -48,7 +48,7 @@ function Login() {
           if (status === "invalidArg") alert("Please enter all the details");
           if (status === "failure") alert("Error in Logging In");
           if (status === "wrongPass") alert("Wrong Password");
-          if (status === "success") navigate(`/student/${regNo}`);
+          if (status === "success") navigate(`/student/${regNo}/${batch}`);
         });
     }
   }

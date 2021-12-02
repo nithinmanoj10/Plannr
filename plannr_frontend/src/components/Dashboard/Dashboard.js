@@ -1,21 +1,33 @@
 import * as React from "react";
+import { useState, useEffect } from "react";
 import plannrLogo from "../../images/plannr_logo.svg";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Button from "../Buttons/Button";
-import Avatar from "@mui/material/Avatar";
-import Stack from "@mui/material/Stack";
 import Calendar from "./Calendar";
-import YourCourses from "./YourCourses";
-import UpcomingClasses from "./UpcomingClasses";
 import TimeTable from "./TimeTable";
-import { deepOrange, deepPurple } from "@mui/material/colors";
 import TimeTableImage from "../../images/timetable.svg";
 
 function Dashboard() {
   const navigate = useNavigate();
+  const { batch } = useParams();
+
+  const [classes, setClasses] = useState({});
+
+  // As soon as the dashboard loads
+  // get the classes for this student
+  useEffect(() => {
+    console.log("Getting classes");
+    fetch(`/getSlots?class="${batch}"`)
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setClasses(data);
+      });
+  }, [batch]);
 
   function handleClick() {
-    navigate("/");
+    navigate("/login");
   }
 
   return (
@@ -45,7 +57,7 @@ function Dashboard() {
         </div>
       </div>
       <div className="dashboard__middle-info">
-        <TimeTable />
+        <TimeTable classes={classes} />
       </div>
     </div>
   );

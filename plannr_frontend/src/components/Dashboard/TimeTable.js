@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState, useEffect } from "react";
 import Paper from "@material-ui/core/Paper";
 import { ViewState } from "@devexpress/dx-react-scheduler";
 import {
@@ -8,12 +9,15 @@ import {
   AppointmentTooltip,
   CurrentTimeIndicator,
 } from "@devexpress/dx-react-scheduler-material-ui";
-import { style } from "@mui/system";
+
+const slotTimings = require("./slotTimings");
+const slotDay = require("./slotDay");
 
 /*const timeTableHeight = document.getElementById(
   "dashboard__middle-info"
 ).offsetHeight;*/
-const currentDate = new Date().toISOString().slice(0, 10);
+// const currentDate = new Date().toISOString().slice(0, 10);
+const currentDate = "2021-12-09";
 console.log(currentDate);
 const appointments = [
   {
@@ -38,8 +42,8 @@ const appointments = [
   },
   {
     title: "Engineering Economics",
-    startDate: "2021-11-30T15:00",
-    endDate: "2021-11-30T16:00",
+    startDate: "2021-12-02T15:00",
+    endDate: "2021-12-02T16:00",
   },
 ];
 
@@ -56,10 +60,46 @@ const Appointment = ({ children, style, ...restProps }) => (
   </Appointments.Appointment>
 );
 
-function TimeTable() {
+function TimeTable({ classes }) {
+  const [classSlots, setClassSlots] = useState([]);
+  const [classesTime, setClassesTime] = useState([]);
+  const [classSlotsReady, setClassSlotsReady] = useState(false);
+
+  // to get all the class slots
+  // and store it in an array
+  useEffect(() => {
+    const temp = [];
+    for (const key in classes) {
+      if (key !== "status") {
+        const slot = classes[key];
+
+        console.log("Slot 1: " + slotTimings[slot[1]]);
+
+        const slotAppointment = {
+          title: `${slot[0]}`,
+          startDate: `${slotDay[slot[2]]}${slotTimings[slot[1]][0]}`,
+          endDate: `${slotDay[slot[2]]}${slotTimings[slot[1]][1]}`,
+          rRule: `FREQ=WEEKLY;INTERVAL=1`,
+        };
+
+        temp.push(slotAppointment);
+        setClassSlots(temp);
+      }
+    }
+  }, [classes]);
+
+  // once all classSlots are stored in an array
+  // useEffect(() => {
+  //   const classAppointments = [];
+
+  //   classSlots.forEach((element, index) => {
+  //     console.log(element);
+  //   });
+  // }, [classSlotsReady]);
+
   return (
     <Paper>
-      <Scheduler data={appointments}>
+      <Scheduler data={classSlots}>
         <ViewState defaultCurrentDate={currentDate} />
         <WeekView
           startDayHour={8}
