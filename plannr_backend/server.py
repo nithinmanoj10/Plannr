@@ -333,20 +333,47 @@ def createSubjectSlotTable():
 
     db.close()
 
-def insertSlot(subjectName, slotNo, day, slotClass, teacherID):
+def insertSlot(subjectName, slotNo, day, slotClass, regNo):
     db = scoped_session(sessionmaker(bind=engine))
     status="_ _"
-    subid=-7
+    collisionCheck=-7 # val will change if slot already exists
+    subjectID=-7
+    teacherID=-7
 
     try:
+        #checking for slot collision
+        retVal = db.execute(f'''
+                                SELECT * FROM slots
+                                WHERE class = '{slotClass}' AND day = {day} AND slot = {slotNo};
+                            ''')
+        for row in retVal:
+            collisionCheck = row[0]
+        if collisionCheck!=-7:
+            status = "slotError" # slot collision detected
+            return status
+    
+        # getting teacherID
+        retVal = db.execute(f'''
+                                SELECT * FROM users
+                                WHERE regNo = '{regNo}' AND role = 'T';
+                            ''')
+        for row in retVal:
+            teacherID = row[0]
+        
+        if teacherID==-7:
+            status = "teacherError" # teacher w given regNo doesnt exist in database
+            return status
+
+        # getting subjectID
         retVal = db.execute(f'''
                                 SELECT * FROM Subjects
                                 WHERE SubjectName = '{subjectName}';
                             ''')
         for row in retVal:
-            subid = row[0]
+            subjectID = row[0]
         
-        if subid==-7:
+        # add subject if it doesn't exist yet
+        if subjectID==-7:
             with engine.connect() as conn:
                 retVal = conn.execute(f'''
                             INSERT INTO subjects (subjectName)
@@ -354,14 +381,14 @@ def insertSlot(subjectName, slotNo, day, slotClass, teacherID):
                             RETURNING *;
                         ''')
                 for row in retVal:
-                    subid = row[0]
+                    subjectID = row[0]
         
         with engine.connect() as conn:
             conn.execute(f'''
                         INSERT INTO slots (subjectID, Slot, Day, Class, teacherID)
-                        VALUES ({subid}, {slotNo}, {day}, '{slotClass}', {teacherID});
+                        VALUES ({subjectID}, {slotNo}, {day}, '{slotClass}', {teacherID});
                     ''')
-            status="success"
+            status = "success"
 
     except exc.SQLAlchemyError as e:
             print(type(e))
@@ -376,18 +403,18 @@ def addSlot():
     slotNo = request.args.get('slotNo', type = int, default=-1)
     day = request.args.get('day', type = int, default=-1)
     slotClass = request.args.get('slotClass', type = str, default='empty').replace('"','')
-    teacherID = request.args.get('teacherID', type = int, default=-1)
+    regNo = request.args.get('regNo', type = str, default='empty').replace('"','')
 
     result = {}
 
-    if "empty" in [subjectName, slotClass]:
+    if "empty" in [subjectName, slotClass, regNo]:
         result["status"]="invalidArg"
-    elif -1 in [slotNo, day, teacherID]:
+    elif -1 in [slotNo, day]:
         result["status"]="invalidArg"
     else:
         result["status"]="_"
         createSubjectSlotTable()
-        result["status"] = insertSlot(subjectName, slotNo, day, slotClass, teacherID)
+        result["status"] = insertSlot(subjectName, slotNo, day, slotClass, regNo)
     
     return jsonify(result)
 

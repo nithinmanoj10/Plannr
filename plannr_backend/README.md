@@ -64,14 +64,16 @@ The other parameters (teacherID, regNo, name, email, class) will have the correc
 Method: ```/addSlot```
 => remember to add parameters just like you would a normal url
 
-*Parameters required:* subjectName, slotNo, day, slotClass, teacherID [note: here, teacherID, slotNo(1-10) and day(1-5) are INTEGERS]
+*Parameters required:* subjectName, slotNo, day, slotClass, regNo [note: here, slotNo(1-10) and day(1-5) are INTEGERS]
 
 *Json returned:* { "status" : "_______" }, where _______ is  
   * invalidArg    (incase of missing parameter(s))  
+  * teacherError  (no teacher with given regNo)  
+  * slotError     (slot collision - given slot is taken for the class)
   * failure       (incase of error in slot addition)  
   * success       (incase of successful slot addition)
 
-*Example Request:* ```/addSlot?subjectName="Maths"&slotNo=1&day=2&slotClass="CSE-B"&teacherID=2```, for a Maths class on Tuesday 8-9 for CSE-B
+*Example Request:* ```/addSlot?subjectName="Maths"&slotNo=1&day=2&slotClass="CSE-B"&regNo="PR001CS"```, for a Maths class on Tuesday 8-9 for CSE-B
 
 ## 6. To get Slots of a Class:
 Method: ```/getSlots```  
