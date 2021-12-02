@@ -13,12 +13,7 @@ import {
 const slotTimings = require("./slotTimings");
 const slotDay = require("./slotDay");
 
-/*const timeTableHeight = document.getElementById(
-  "dashboard__middle-info"
-).offsetHeight;*/
-// const currentDate = new Date().toISOString().slice(0, 10);
-const currentDate = "2021-12-09";
-console.log(currentDate);
+const currentDate = new Date().toISOString().slice(0, 10);
 const appointments = [
   {
     title: "Operating Systems",
@@ -62,8 +57,6 @@ const Appointment = ({ children, style, ...restProps }) => (
 
 function TimeTable({ classes }) {
   const [classSlots, setClassSlots] = useState([]);
-  const [classesTime, setClassesTime] = useState([]);
-  const [classSlotsReady, setClassSlotsReady] = useState(false);
 
   // to get all the class slots
   // and store it in an array
@@ -72,8 +65,6 @@ function TimeTable({ classes }) {
     for (const key in classes) {
       if (key !== "status") {
         const slot = classes[key];
-
-        console.log("Slot 1: " + slotTimings[slot[1]]);
 
         const slotAppointment = {
           title: `${slot[0]}`,
@@ -87,15 +78,6 @@ function TimeTable({ classes }) {
       }
     }
   }, [classes]);
-
-  // once all classSlots are stored in an array
-  // useEffect(() => {
-  //   const classAppointments = [];
-
-  //   classSlots.forEach((element, index) => {
-  //     console.log(element);
-  //   });
-  // }, [classSlotsReady]);
 
   return (
     <Paper>

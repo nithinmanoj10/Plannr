@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState, useEffect } from "react";
 import Paper from "@material-ui/core/Paper";
 import FormGroup from "@material-ui/core/FormGroup";
 import Checkbox from "@material-ui/core/Checkbox";
@@ -18,6 +19,9 @@ import {
   AppointmentTooltip,
   DragDropProvider,
 } from "@devexpress/dx-react-scheduler-material-ui";
+
+const slotTimings = require("./slotTimings");
+const slotDay = require("./slotDay");
 
 const currentDate = new Date().toISOString().slice(0, 10);
 const appointments = [
@@ -111,8 +115,32 @@ const Appointment = ({ children, style, ...restProps }) => (
   </Appointments.Appointment>
 );
 
-function TimeTableTeacher() {
-  const [data, setData] = React.useState(appointments);
+function TimeTableTeacher({ classes }) {
+  const [classSlots, setClassSlots] = useState([]);
+
+  // to get all the class slots
+  // and store it in an array
+  useEffect(() => {
+    const temp = [];
+    for (const key in classes) {
+      if (key !== "status") {
+        const slot = classes[key];
+
+        const slotAppointment = {
+          title: `${slot[0]}`,
+          startDate: `${slotDay[slot[2]]}${slotTimings[slot[1]][0]}`,
+          endDate: `${slotDay[slot[2]]}${slotTimings[slot[1]][1]}`,
+          rRule: `FREQ=WEEKLY;INTERVAL=1`,
+        };
+
+        console.log(slotAppointment);
+
+        temp.push(slotAppointment);
+        setClassSlots(temp);
+      }
+    }
+  }, [classes]);
+
   const [editingOptions, setEditingOptions] = React.useState({
     allowAdding: true,
     allowDeleting: true,
@@ -136,12 +164,12 @@ function TimeTableTeacher() {
     ({ added, changed, deleted }) => {
       if (added) {
         const startingAddedId =
-          data.length > 0 ? data[data.length - 1].id + 1 : 0;
-        setData([...data, { id: startingAddedId, ...added }]);
+          classSlots.length > 0 ? classSlots[classSlots.length - 1].id + 1 : 0;
+        setClassSlots([...classSlots, { id: startingAddedId, ...added }]);
       }
       if (changed) {
-        setData(
-          data.map((appointment) =>
+        setClassSlots(
+          classSlots.map((appointment) =>
             changed[appointment.id]
               ? { ...appointment, ...changed[appointment.id] }
               : appointment
@@ -149,11 +177,13 @@ function TimeTableTeacher() {
         );
       }
       if (deleted !== undefined) {
-        setData(data.filter((appointment) => appointment.id !== deleted));
+        setClassSlots(
+          classSlots.filter((appointment) => appointment.id !== deleted)
+        );
       }
       setIsAppointmentBeingCreated(false);
     },
-    [setData, setIsAppointmentBeingCreated, data]
+    [setClassSlots, setIsAppointmentBeingCreated, classSlots]
   );
   const onAddedAppointmentChange = React.useCallback((appointment) => {
     setAddedAppointment(appointment);
@@ -206,7 +236,7 @@ function TimeTableTeacher() {
   return (
     <React.Fragment>
       <Paper>
-        <Scheduler data={data}>
+        <Scheduler data={classSlots}>
           <ViewState currentDate={currentDate} />
           <EditingState
             onCommitChanges={onCommitChanges}
