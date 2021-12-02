@@ -25,7 +25,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Homepage />} />
-          <Route path="/student/:regNo" exact element={<Dashboard />} />
+          <Route path="/student/:regNo/:batch" exact element={<Dashboard />} />
           <Route
             path="/teacher/:regNo/:teacherID"
             element={<DashBoardTeacher />}
