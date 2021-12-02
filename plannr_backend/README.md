@@ -91,7 +91,21 @@ Method: ```/deleteSlot```
 
 *Example Request:* ```/deleteSlot?subjectName="Maths"&slotNo=1&day=2&slotClass="CSE-B"&regNo="PR001CS"```, for a Maths class on Tuesday 8-9 for CSE-B
 
-## 7. To get Slots of a Class:
+## 7. For Slot Deletion only using SlotID:
+Method: ```/deleteSlot2```
+=> remember to add parameters just like you would a normal url
+
+*Parameters required:* slotID [note: here, slotID is INTEGER]
+
+*Json returned:* { "status" : "_______" }, where _______ is  
+  * invalidArg    (incase of missing parameter(s))  
+  * failure       (incase of error in slot deletion)  
+  * success       (incase of successful slot deletion)  
+  Note: returns success even if there was no slot with given slotID in the first place (as it will be considered deleted)
+
+*Example Request:* ```/deleteSlot2?slotID=2```
+
+## 8. To get Slots of a Class:
 Method: ```/getSlots```  
 
 => remember to add parameters just like you would a normal url

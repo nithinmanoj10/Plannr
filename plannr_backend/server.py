@@ -501,6 +501,35 @@ def deleteSlot():
     
     return jsonify(result)
 
+# start of 'delete slot 2' functionality
+def removeSlot2(slotID):
+    try:
+        with engine.connect() as conn:
+            conn.execute(f'''
+                            DELETE FROM Slots
+                            WHERE SlotID = {slotID};
+                        ''')
+        return "success"
+    except exc.SQLAlchemyError as e:
+            print(type(e))
+            print(e)
+            return "failure"
+
+@app.route("/deleteSlot2")
+def deleteSlot2():
+    slotID = request.args.get('slotID', type = int, default=-1)
+
+    result = {}
+
+    if -1 in [slotID]:
+        result["status"]="invalidArg"
+    else:
+        result["status"]="_"
+        createSubjectSlotTable()
+        result["status"] = removeSlot2(slotID)
+    
+    return jsonify(result)
+
 # start of 'get all slots of a class' functionality
 
 def slotsOfClass(userClass):
