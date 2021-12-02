@@ -24,33 +24,6 @@ const slotTimings = require("./slotTimings");
 const slotDay = require("./slotDay");
 
 const currentDate = new Date().toISOString().slice(0, 10);
-const appointments = [
-  {
-    title: "Operating Systems",
-    startDate: "2021-11-29T09:00",
-    endDate: "2021-11-29T10:00",
-  },
-  {
-    title: "Database and Management Systems",
-    startDate: "2021-11-29T10:15",
-    endDate: "2021-11-29T11:15",
-  },
-  {
-    title: "OS Lab",
-    startDate: "2021-11-29T14:00",
-    endDate: "2021-11-29T17:00",
-  },
-  {
-    title: "Theory of Computation",
-    startDate: "2021-11-30T12:00",
-    endDate: "2021-11-30T13:00",
-  },
-  {
-    title: "Engineering Economics",
-    startDate: "2021-11-30T15:00",
-    endDate: "2021-11-30T16:00",
-  },
-];
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -115,8 +88,9 @@ const Appointment = ({ children, style, ...restProps }) => (
   </Appointments.Appointment>
 );
 
-function TimeTableTeacher({ classes }) {
+function TimeTableTeacher({ classes, batch, regNo }) {
   const [classSlots, setClassSlots] = useState([]);
+  const [refresh, setRefresh] = useState(1);
 
   // to get all the class slots
   // and store it in an array
@@ -127,19 +101,49 @@ function TimeTableTeacher({ classes }) {
         const slot = classes[key];
 
         const slotAppointment = {
+          id: key,
           title: `${slot[0]}`,
           startDate: `${slotDay[slot[2]]}${slotTimings[slot[1]][0]}`,
           endDate: `${slotDay[slot[2]]}${slotTimings[slot[1]][1]}`,
           rRule: `FREQ=WEEKLY;INTERVAL=1`,
         };
 
-        console.log(slotAppointment);
-
         temp.push(slotAppointment);
-        setClassSlots(temp);
       }
     }
-  }, [classes]);
+    setClassSlots(temp);
+  }, [classes, refresh]);
+
+  // printing all the deleted slots
+  useEffect(() => {
+    classSlots.forEach((slot, index) => {
+      if (slot.exDate !== undefined) {
+        const deletedClassSlot = classes[slot.id];
+        const urlDeleteSlot = `/deleteSlot?subjectName="${deletedClassSlot[0]}"&slotNo=${deletedClassSlot[1]}&day=${deletedClassSlot[2]}&slotClass="${batch}"&regNo="${regNo}"`;
+
+        fetch(urlDeleteSlot)
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            const { status } = data;
+
+            if (
+              status === "invalidArg" ||
+              status === "teacherError" ||
+              status === "slotError" ||
+              status === "subjectError" ||
+              status === "failure"
+            ) {
+              alert("Error in Deletion");
+              setRefresh(refresh * -1);
+            }
+
+            if (status === "success") alert("Successfully Deleted");
+          });
+      }
+    });
+  }, [classSlots]);
 
   const [editingOptions, setEditingOptions] = React.useState({
     allowAdding: true,
@@ -222,15 +226,6 @@ function TimeTableTeacher({ classes }) {
       return <AppointmentForm.CommandButton id={id} {...restProps} />;
     },
     [allowDeleting]
-  );
-
-  const allowDrag = React.useCallback(
-    () => allowDragging && allowUpdating,
-    [allowDragging, allowUpdating]
-  );
-  const allowResize = React.useCallback(
-    () => allowResizing && allowUpdating,
-    [allowResizing, allowUpdating]
   );
 
   return (

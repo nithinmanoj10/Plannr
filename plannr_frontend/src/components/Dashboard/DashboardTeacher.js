@@ -16,6 +16,7 @@ function Dashboard() {
   const batch = EnggBranches[enggCode];
 
   const [classes, setClasses] = useState({});
+  const [refresh, setRefresh] = useState(1);
 
   // As soon as the dashboard loads
   // get the classes for this teacher
@@ -27,6 +28,7 @@ function Dashboard() {
       })
       .then((data) => {
         setClasses(data);
+        console.log(classes);
       });
   }, [batch]);
 
@@ -61,7 +63,7 @@ function Dashboard() {
         </div>
       </div>
       <div className="dashboard__middle-info">
-        <TimeTableTeacher classes={classes} />
+        <TimeTableTeacher classes={classes} batch={batch} regNo={regNo} />
       </div>
     </div>
   );
