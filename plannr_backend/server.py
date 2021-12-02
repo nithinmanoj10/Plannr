@@ -8,7 +8,7 @@ from flask_bcrypt import Bcrypt
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
 
-engine = create_engine(f"postgresql://postgres:{os.environ.get('psqlPass')}@localhost:5432/plannr")
+engine = create_engine(f"postgresql://postgres:nithin@localhost:5432/plannr")
 # start of functionality for 'test' method
 
 # uncomment what you want to test here
@@ -222,9 +222,6 @@ def validateStudentLogin(userRegNo, userPass, result):
 
             result["status"] = "success"
 
-            if result["name"]=="empty":
-                result["status"] = "userDNE"
-
     except exc.SQLAlchemyError as e:
         print(type(e))
         result["status"] = "failure"
@@ -275,9 +272,6 @@ def validateTeacherLogin(userRegNo, userPass, result):
                 result["email"] = row[5]
 
             result["status"] = "success"
-
-            if result["name"]=="empty":
-                result["status"] = "userDNE"
 
     except exc.SQLAlchemyError as e:
         print(type(e))
@@ -504,35 +498,6 @@ def deleteSlot():
         result["status"]="_"
         createSubjectSlotTable()
         result["status"] = removeSlot(subjectName, slotNo, day, slotClass, regNo)
-    
-    return jsonify(result)
-
-# start of 'delete slot 2' functionality
-def removeSlot2(slotID):
-    try:
-        with engine.connect() as conn:
-            conn.execute(f'''
-                            DELETE FROM Slots
-                            WHERE SlotID = {slotID};
-                        ''')
-        return "success"
-    except exc.SQLAlchemyError as e:
-            print(type(e))
-            print(e)
-            return "failure"
-
-@app.route("/deleteSlot2")
-def deleteSlot2():
-    slotID = request.args.get('slotID', type = int, default=-1)
-
-    result = {}
-
-    if -1 in [slotID]:
-        result["status"]="invalidArg"
-    else:
-        result["status"]="_"
-        createSubjectSlotTable()
-        result["status"] = removeSlot2(slotID)
     
     return jsonify(result)
 

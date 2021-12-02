@@ -5,7 +5,7 @@ import DashBoardTeacher from "./components/Dashboard/DashboardTeacher";
 import Login from "./components/Login/Login";
 import Signup from "./components/SignUp/Signup";
 import SignUpFaculty from "./components/SignUp/SignupFaculty";
-import Test from "./components/SignUp/Test";
+import AddSlot from "./components/AddSlot/Addslot";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
 function App() {
@@ -33,7 +33,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup-student" element={<Signup />} />
           <Route path="/signup-teacher" element={<SignUpFaculty />} />
-          <Route path="/signup-test" element={<Test />} />
+          <Route path="/add-slot/:regNo/:batch" element={<AddSlot />} />
         </Routes>
       </BrowserRouter>
     </div>

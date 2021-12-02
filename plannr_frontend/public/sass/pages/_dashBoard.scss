@@ -184,3 +184,16 @@
 .VerticalAppointment-imageContainer-165 {
   display: none;
 }
+.add-slot-icon {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin: 20px;
+  opacity: 20%;
+
+  transition: all 0.2s;
+
+  &:hover {
+    opacity: 100%;
+  }
+}

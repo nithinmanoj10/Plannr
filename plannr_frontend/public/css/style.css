@@ -431,6 +431,19 @@ a {
   display: none;
 }
 
+.add-slot-icon {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin: 20px;
+  opacity: 20%;
+  transition: all 0.2s;
+}
+
+.add-slot-icon:hover {
+  opacity: 100%;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -547,30 +560,41 @@ button:active {
   text-decoration: none;
 }
 
-.signup-page {
+.add-slot-page {
   min-height: 100vh;
   display: grid;
   grid-template-columns: 1fr 1.5fr;
 }
 
-.signup-page__picture-section {
+.add-slot-page__picture-section {
   grid-column: 1 / 2;
   background-color: var(--col-primary-transparent-purple);
   padding: 50px 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.signup-page__picture-section__name .plannr-name {
+.add-slot-page__picture-section__name {
+  margin-bottom: 100px;
+}
+
+.add-slot-page__picture-section__name .plannr-name {
   height: 30px;
 }
 
-.signup-page__picture-section__name .plannr-tag {
+.add-slot-page__picture-section__name .plannr-tag {
   color: var(--col-primary-purple);
   opacity: 50%;
-  width: 170px;
+  width: 370px;
   margin-top: 10px;
 }
 
-.signup-page__form-section {
+.add-slot-page__picture-section__image {
+  height: 300px;
+}
+
+.add-slot-page__form-section {
   grid-column: 2 / 3;
 }
 
