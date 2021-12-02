@@ -24,8 +24,6 @@ function Signup() {
       .then((data) => {
         const { result } = data;
 
-        console.log(typeof result);
-
         if (result === "invalidArg")
           alert("Please enter all the details to sign up successfully");
 
@@ -34,14 +32,18 @@ function Signup() {
 
         if (result === "success") navigate("/login");
       });
-
-    console.log(urlSignUpStudent);
   }
 
   // go to login page if already signed up
   function handleAlreadyRegistered() {
     navigate("/login");
   }
+
+  // go to sign up page for teachers
+  function handleTeacherSignUp() {
+    navigate("/signup-teacher");
+  }
+
   // function to get the Registration Number value
   function handleRegNo(e) {
     setRegNo(e.target.value);
@@ -173,7 +175,11 @@ function Signup() {
             Submit
           </button>
         </div>
-        <a href="#" className="signup">
+        <a
+          href="javascript:void(0)"
+          className="signup"
+          onClick={handleTeacherSignUp}
+        >
           Sign Up - Faculty
         </a>
         <a
