@@ -75,7 +75,23 @@ Method: ```/addSlot```
 
 *Example Request:* ```/addSlot?subjectName="Maths"&slotNo=1&day=2&slotClass="CSE-B"&regNo="PR001CS"```, for a Maths class on Tuesday 8-9 for CSE-B
 
-## 6. To get Slots of a Class:
+## 6. For Slot Deletion:
+Method: ```/deleteSlot```
+=> remember to add parameters just like you would a normal url
+
+*Parameters required:* subjectName, slotNo, day, slotClass, regNo [note: here, slotNo(1-10) and day(1-5) are INTEGERS]
+
+*Json returned:* { "status" : "_______" }, where _______ is  
+  * invalidArg    (incase of missing parameter(s))  
+  * teacherError  (no teacher with given regNo)  
+  * slotError     (slot collision - given slot is taken for the class OR the slot is not the given teachers(a teacher can't delete anothers slots))
+  * subjectError  (the subject doesn't exist)
+  * failure       (incase of error in slot deletion)  
+  * success       (incase of successful slot deletion)
+
+*Example Request:* ```/deleteSlot?subjectName="Maths"&slotNo=1&day=2&slotClass="CSE-B"&regNo="PR001CS"```, for a Maths class on Tuesday 8-9 for CSE-B
+
+## 7. To get Slots of a Class:
 Method: ```/getSlots```  
 
 => remember to add parameters just like you would a normal url

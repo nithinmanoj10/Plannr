@@ -341,17 +341,6 @@ def insertSlot(subjectName, slotNo, day, slotClass, regNo):
     teacherID=-7
 
     try:
-        #checking for slot collision
-        retVal = db.execute(f'''
-                                SELECT * FROM slots
-                                WHERE class = '{slotClass}' AND day = {day} AND slot = {slotNo};
-                            ''')
-        for row in retVal:
-            collisionCheck = row[0]
-        if collisionCheck!=-7:
-            status = "slotError" # slot collision detected
-            return status
-    
         # getting teacherID
         retVal = db.execute(f'''
                                 SELECT * FROM users
@@ -362,6 +351,17 @@ def insertSlot(subjectName, slotNo, day, slotClass, regNo):
         
         if teacherID==-7:
             status = "teacherError" # teacher w given regNo doesnt exist in database
+            return status
+
+        #checking for slot collision
+        retVal = db.execute(f'''
+                                SELECT * FROM slots
+                                WHERE class = '{slotClass}' AND day = {day} AND slot = {slotNo};
+                            ''')
+        for row in retVal:
+            collisionCheck = row[0]
+        if collisionCheck!=-7:
+            status = "slotError" # slot collision detected
             return status
 
         # getting subjectID
@@ -415,6 +415,89 @@ def addSlot():
         result["status"]="_"
         createSubjectSlotTable()
         result["status"] = insertSlot(subjectName, slotNo, day, slotClass, regNo)
+    
+    return jsonify(result)
+
+# start of 'delete slot' functionality
+
+def removeSlot(subjectName, slotNo, day, slotClass, regNo):
+    db = scoped_session(sessionmaker(bind=engine))
+    status="_ _"
+    collisionCheck=-7 # val will change if slot exists
+    subjectID=-7
+    teacherID=-7
+    delRow=-7
+
+    try:
+        # getting teacherID
+        retVal = db.execute(f'''
+                                SELECT * FROM users
+                                WHERE regNo = '{regNo}' AND role = 'T';
+                            ''')
+        for row in retVal:
+            teacherID = row[0]
+        
+        if teacherID==-7:
+            status = "teacherError" # teacher w given regNo doesnt exist in database
+            return status
+
+        # getting subjectID
+        retVal = db.execute(f'''
+                                SELECT * FROM Subjects
+                                WHERE SubjectName = '{subjectName}';
+                            ''')
+        for row in retVal:
+            subjectID = row[0]
+        
+        # subject doesn't exist
+        if subjectID==-7:
+            status = "subjectError"
+            return status
+
+        #checking for slot existance
+        retVal = db.execute(f'''
+                                SELECT * FROM slots
+                                WHERE class = '{slotClass}' AND day = {day} AND slot = {slotNo} AND teacherID={teacherID};
+                            ''')
+        for row in retVal:
+            collisionCheck = row[0]
+        if collisionCheck==-7:
+            status = "slotError" # slot doesn't exist/isn't the teachers slot
+            return status
+        
+        with engine.connect() as conn:
+            conn.execute(f'''
+                        DELETE FROM slots
+                        WHERE subjectID={subjectID} AND slot={slotNo} AND day={day} 
+                                AND class='{slotClass}' AND teacherID={teacherID};
+                    ''')
+            status = "success"
+
+    except exc.SQLAlchemyError as e:
+            print(type(e))
+            print(e)
+            status = "failure"
+
+    return status
+
+@app.route("/deleteSlot")
+def deleteSlot():
+    subjectName = request.args.get('subjectName', type = str, default='empty').replace('"','')
+    slotNo = request.args.get('slotNo', type = int, default=-1)
+    day = request.args.get('day', type = int, default=-1)
+    slotClass = request.args.get('slotClass', type = str, default='empty').replace('"','')
+    regNo = request.args.get('regNo', type = str, default='empty').replace('"','')
+
+    result = {}
+
+    if "empty" in [subjectName, slotClass, regNo]:
+        result["status"]="invalidArg"
+    elif -1 in [slotNo, day]:
+        result["status"]="invalidArg"
+    else:
+        result["status"]="_"
+        createSubjectSlotTable()
+        result["status"] = removeSlot(subjectName, slotNo, day, slotClass, regNo)
     
     return jsonify(result)
 
