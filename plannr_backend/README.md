@@ -37,7 +37,8 @@ Method: ```/loginStudent```
 *Json returned:* { "regNo": " _____ ", "name": " _____ ", "email": " _____ ", "class": " _____ ", "status": " _____ " }, where status is  
   * invalidArg    (incase of missing parameter(s))
   * failure       (incase of error in login)
-  * wrongPass     (incase of wrong password)
+  * wrongPass     (incase of wrong password)  
+  * userDNE       (incase user does not exist)
   * success       (incase of successful login)  
 The other parameters (regNo, name, email, class) will have the correct values incase of successful signup. They are "empty" by default. 
 

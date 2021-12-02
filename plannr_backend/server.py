@@ -276,6 +276,9 @@ def validateTeacherLogin(userRegNo, userPass, result):
 
             result["status"] = "success"
 
+            if result["name"]=="empty":
+                result["status"] = "userDNE"
+
     except exc.SQLAlchemyError as e:
         print(type(e))
         result["status"] = "failure"
