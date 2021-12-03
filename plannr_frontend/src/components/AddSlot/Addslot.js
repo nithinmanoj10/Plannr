@@ -28,9 +28,33 @@ function AddSlot() {
       .then((data) => {
         const { status } = data;
 
-        if (status !== "success") alert("Error in creating Slot");
+        if (status === "success") {
+          setStatusMessage("success");
 
-        if (status === "success") navigate(`/teacher/${regNo}/${teacherID}`);
+          setTimeout(() => {
+            navigate(`/teacher/${regNo}/${teacherID}`);
+          }, 1000);
+        }
+
+        if (status === "invalidArg") {
+          setStatusMessage("warning");
+          setMessageContent("There are some inputs missing");
+        }
+
+        if (status === "teacherError") {
+          setStatusMessage("error");
+          setMessageContent("You are not allowed to add any classes");
+        }
+
+        if (status === "slotError") {
+          setStatusMessage("warning");
+          setMessageContent("This slot is already taken");
+        }
+
+        if (status === "error") {
+          setStatusMessage("Error");
+          setMessageContent("There was an error in adding the slot");
+        }
       });
   }
   function handleClassTitle(e) {
@@ -58,14 +82,12 @@ function AddSlot() {
         setIsWarning(true);
         setIsError(false);
         setMessageHeader("Could you check something!");
-        setMessageContent("Maybe that slot is already booked");
         break;
 
       case "error":
         setIsSuccess(false);
         setIsWarning(false);
         setIsError(true);
-        setMessageHeader("Error");
         setMessageContent("There has been an error in adding the class");
         break;
 
