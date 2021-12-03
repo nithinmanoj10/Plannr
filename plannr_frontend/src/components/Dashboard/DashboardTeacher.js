@@ -14,7 +14,7 @@ function Dashboard() {
   const navigate = useNavigate();
 
   const EnggBranches = require("./EnggBranches");
-  const { regNo } = useParams();
+  const { regNo, teacherID } = useParams();
   const enggCode = regNo.slice(-2);
   const batch = EnggBranches[enggCode];
 
@@ -40,7 +40,7 @@ function Dashboard() {
 
   // when teacher clicks the add slot button
   function handleAddSlot() {
-    navigate(`/add-slot/${regNo}/${batch}`);
+    navigate(`/add-slot/${regNo}/${batch}/${teacherID}`);
   }
 
   const theme = createTheme({

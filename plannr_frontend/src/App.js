@@ -33,7 +33,10 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup-student" element={<Signup />} />
           <Route path="/signup-teacher" element={<SignUpFaculty />} />
-          <Route path="/add-slot/:regNo/:batch" element={<AddSlot />} />
+          <Route
+            path="/add-slot/:regNo/:batch/:teacherID"
+            element={<AddSlot />}
+          />
         </Routes>
       </BrowserRouter>
     </div>
