@@ -7,8 +7,8 @@ from flask_bcrypt import Bcrypt
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
-engine = create_engine(
-    f"postgresql://postgres:nithin@localhost:5432/plannr")
+
+engine = create_engine(f"postgresql://postgres:{os.environ.get('psqlPass')}@localhost:5432/plannr")
 # start of functionality for 'test' method
 
 # uncomment what you want to test here
@@ -246,6 +246,9 @@ def validateStudentLogin(userRegNo, userPass, result):
 
             result["status"] = "success"
 
+            if result["name"]=="empty":
+                result["status"] = "userDNE"
+
     except exc.SQLAlchemyError as e:
         print(type(e))
         result["status"] = "failure"
@@ -301,6 +304,9 @@ def validateTeacherLogin(userRegNo, userPass, result):
                 result["email"] = row[5]
 
             result["status"] = "success"
+
+            if result["name"]=="empty":
+                result["status"] = "userDNE"
 
     except exc.SQLAlchemyError as e:
         print(type(e))
