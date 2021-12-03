@@ -69,7 +69,7 @@ function Login() {
         <img src={loginImg} alt="LoginImg" className="login-picture" />
       </div>
       <div className="container">
-        <div className="header">Login</div>
+        <div className="header-title">Login</div>
         <div className="form-group">
           <label>Registration Number </label>
           <input

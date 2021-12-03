@@ -36,5 +36,11 @@
 
   &__form-section {
     grid-column: 2 / 3;
+    padding: 50px;
+    width: 600px;
+
+    &__title {
+      margin-bottom: 40px;
+    }
   }
 }

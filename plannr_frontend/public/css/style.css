@@ -477,7 +477,7 @@ a {
   font-weight: 400;
 }
 
-.header {
+.header-title {
   font-size: 35px;
   padding: 20px;
   text-align: left;
@@ -596,6 +596,12 @@ button:active {
 
 .add-slot-page__form-section {
   grid-column: 2 / 3;
+  padding: 50px;
+  width: 600px;
+}
+
+.add-slot-page__form-section__title {
+  margin-bottom: 40px;
 }
 
 .App {
