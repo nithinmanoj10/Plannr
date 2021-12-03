@@ -473,7 +473,6 @@ def removeSlot(subjectName, slotNo, day, slotClass, regNo):
     collisionCheck = -7  # val will change if slot exists
     subjectID = -7
     teacherID = -7
-    delRow = -7
 
     try:
         # getting teacherID
@@ -550,6 +549,54 @@ def deleteSlot():
         createSubjectSlotTable()
         result["status"] = removeSlot(
             subjectName, slotNo, day, slotClass, regNo)
+
+    return jsonify(result)
+
+# start of 'delete slot only using SlotID' functionality
+
+def removeSlot2(slotID):
+    db = scoped_session(sessionmaker(bind=engine))
+    status = "_ _"
+    collisionCheck = -7  # val will change if slot exists
+
+    try:
+        # checking for slot existance
+        retVal = db.execute(f'''
+                                SELECT * FROM slots
+                                WHERE slotID = {slotID};
+                            ''')
+        for row in retVal:
+            collisionCheck = row[0]
+        if collisionCheck == -7:
+            status = "slotError"  # slot doesn't exist/isn't the teachers slot
+            return status
+
+        with engine.connect() as conn:
+            conn.execute(f'''
+                        DELETE FROM slots
+                        WHERE slotID={slotID};
+                    ''')
+            status = "success"
+
+    except exc.SQLAlchemyError as e:
+        print(type(e))
+        print(e)
+        status = "failure"
+
+    return status
+
+@app.route("/deleteSlot2")
+def deleteSlot2():
+    slotID = request.args.get('slotNo', type=int, default=-1)
+
+    result = {}
+
+    if -1 in [slotID]:
+        result["status"] = "invalidArg"
+    else:
+        result["status"] = "_"
+        createSubjectSlotTable()
+        result["status"] = removeSlot2(slotID)
 
     return jsonify(result)
 
