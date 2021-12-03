@@ -7,40 +7,45 @@ from flask_bcrypt import Bcrypt
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
-engine = create_engine(f"postgresql://postgres:{os.environ.get('psqlPass')}@localhost:5432/plannr")
+engine = create_engine(
+    f"postgresql://postgres:akshay@localhost:5432/plannr")
 # start of functionality for 'test' method
 
 # uncomment what you want to test here
+
+
 def connectDB_TEST():
     # print(os.environ.get('emailPass'))
     #engine = create_engine(f"postgresql://postgres:{os.environ.get('emailPass')}@localhost:5432/plannr")
     #db = scoped_session(sessionmaker(bind=engine))
     #db.execute("CREATE TABLE IF NOT EXISTS TEST2 (id INTEGER NOT NULL, name VARCHAR, PRIMARY KEY (id));")
-    #db.commit()
+    # db.commit()
 
-    #with engine.connect() as conn:
+    # with engine.connect() as conn:
     #    conn.execute('''INSERT INTO test2 (id,name)
     #                    VALUES (2, 'Akshay'), (3, 'Nithin'), (4,'Adwaith'), (5,'Jeswell');
     #                ''')
-    
-    #with engine.connect() as conn:
+
+    # with engine.connect() as conn:
     #    res = conn.execute("SELECT * FROM test2")
     #    for r in res:
     #        print(r)
 
-    #db.close()
+    # db.close()
     print('test')
+
 
 @app.route("/test")
 def test():
     connectDB_TEST()
-    return jsonify({"connTest" : ["this", "is", "a", "python", "object"]})
+    return jsonify({"connTest": ["this", "is", "a", "python", "object"]})
 
-# start of functionality for 'signupStudent' 
+# start of functionality for 'signupStudent'
+
 
 def signupStudentCreateTable():
     db = scoped_session(sessionmaker(bind=engine))
-    
+
     db.execute('''
                 CREATE TABLE IF NOT EXISTS USERS (
                     UserId SERIAL PRIMARY KEY,
@@ -69,6 +74,7 @@ def signupStudentCreateTable():
 
     db.close()
 
+
 def signupInsertStudent(userRegNo, userName, userPassHash, userDOB, userEmail, userMobNo, userClass):
     db = scoped_session(sessionmaker(bind=engine))
 
@@ -84,7 +90,7 @@ def signupInsertStudent(userRegNo, userName, userPassHash, userDOB, userEmail, u
                         ''')
             for row in returnVal:
                 userid = row[0]
-            
+
             conn.execute(f'''
                             INSERT INTO students (StudentID, Class)
                             VALUES ({userid}, '{userClass}');
@@ -100,36 +106,45 @@ def signupInsertStudent(userRegNo, userName, userPassHash, userDOB, userEmail, u
 
     return result
 
+
 @app.route("/signupStudent")
 def signupStudent():
-    userRegNo = request.args.get('regNo', type = str, default='empty').replace('"','')
-    userName = request.args.get('name', type = str, default='empty').replace('"','')
-    userPass = request.args.get('pass', type = str, default='empty').replace('"','')
-    userDOB = request.args.get('dob', type = str, default='empty').replace('"','')
-    userEmail = request.args.get('email', type = str, default='empty').replace('"','')
-    userMobNo = request.args.get('mobNo', type = str, default='empty').replace('"','')
-    userClass = request.args.get('class', type = str, default='empty').replace('"','')
+    userRegNo = request.args.get(
+        'regNo', type=str, default='empty').replace('"', '')
+    userName = request.args.get(
+        'name', type=str, default='empty').replace('"', '')
+    userPass = request.args.get(
+        'pass', type=str, default='empty').replace('"', '')
+    userDOB = request.args.get(
+        'dob', type=str, default='empty').replace('"', '')
+    userEmail = request.args.get(
+        'email', type=str, default='empty').replace('"', '')
+    userMobNo = request.args.get(
+        'mobNo', type=str, default='empty').replace('"', '')
+    userClass = request.args.get(
+        'class', type=str, default='empty').replace('"', '')
 
     result = ""
 
     # print(userRegNo, userName, userPass, userDOB, userEmail, userMobNo, userClass)
 
     if '' in [userRegNo, userName, userPass, userDOB, userEmail, userMobNo, userClass]:
-        result="invalidArg"
+        result = "invalidArg"
     else:
         result = "_"
         userPassHash = bcrypt.generate_password_hash(userPass).decode("utf-8")
         signupStudentCreateTable()
-        result = signupInsertStudent(userRegNo, userName, userPassHash, userDOB, userEmail, userMobNo, userClass)
+        result = signupInsertStudent(
+            userRegNo, userName, userPassHash, userDOB, userEmail, userMobNo, userClass)
 
-    return jsonify({ "result" : f"{result}" })
+    return jsonify({"result": f"{result}"})
 
 
 # start of functionality for 'signupTeacher'
 
 def signupTeacherCreateTable():
     db = scoped_session(sessionmaker(bind=engine))
-    
+
     db.execute('''
                 CREATE TABLE IF NOT EXISTS USERS (
                     UserId SERIAL PRIMARY KEY,
@@ -144,6 +159,7 @@ def signupTeacherCreateTable():
                 ''')
     db.commit()
     db.close()
+
 
 def signupInsertTeacher(userRegNo, userName, userPassHash, userDOB, userEmail, userMobNo):
     db = scoped_session(sessionmaker(bind=engine))
@@ -166,34 +182,43 @@ def signupInsertTeacher(userRegNo, userName, userPassHash, userDOB, userEmail, u
 
     return result
 
+
 @app.route("/signupTeacher")
 def signupTeacher():
-    userRegNo = request.args.get('regNo', type = str, default='empty').replace('"','')
-    userName = request.args.get('name', type = str, default='empty').replace('"','')
-    userPass = request.args.get('pass', type = str, default='empty').replace('"','')
-    userDOB = request.args.get('dob', type = str, default='empty').replace('"','')
-    userEmail = request.args.get('email', type = str, default='empty').replace('"','')
-    userMobNo = request.args.get('mobNo', type = str, default='empty').replace('"','')
+    userRegNo = request.args.get(
+        'regNo', type=str, default='empty').replace('"', '')
+    userName = request.args.get(
+        'name', type=str, default='empty').replace('"', '')
+    userPass = request.args.get(
+        'pass', type=str, default='empty').replace('"', '')
+    userDOB = request.args.get(
+        'dob', type=str, default='empty').replace('"', '')
+    userEmail = request.args.get(
+        'email', type=str, default='empty').replace('"', '')
+    userMobNo = request.args.get(
+        'mobNo', type=str, default='empty').replace('"', '')
 
     result = ""
 
     if "empty" in [userRegNo, userName, userPass, userDOB, userEmail, userMobNo]:
-        result="invalidArg"
+        result = "invalidArg"
     else:
         result = "_"
         userPassHash = bcrypt.generate_password_hash(userPass).decode("utf-8")
         signupTeacherCreateTable()
-        result = signupInsertTeacher(userRegNo, userName, userPassHash, userDOB, userEmail, userMobNo)
+        result = signupInsertTeacher(
+            userRegNo, userName, userPassHash, userDOB, userEmail, userMobNo)
 
-    return jsonify({ "result" : f"{result}" })
+    return jsonify({"result": f"{result}"})
 
 # start of functionality for 'student login'
+
 
 def validateStudentLogin(userRegNo, userPass, result):
     db = scoped_session(sessionmaker(bind=engine))
 
     result["status"] = "_ _"
-    
+
     userid = -1
     try:
         with engine.connect() as conn:
@@ -204,11 +229,11 @@ def validateStudentLogin(userRegNo, userPass, result):
             for row in returnVal:
                 userid = row[0]
                 pw_hash = row[3]
-                
-                if bcrypt.check_password_hash(pw_hash, userPass)==False:
+
+                if bcrypt.check_password_hash(pw_hash, userPass) == False:
                     result["status"] = "wrongPass"
                     return result
-                
+
                 result["name"] = row[2]
                 result["email"] = row[5]
 
@@ -230,17 +255,21 @@ def validateStudentLogin(userRegNo, userPass, result):
 
     return result
 
+
 @app.route("/loginStudent")
 def loginStudent():
-    userRegNo = request.args.get('regNo', type = str, default='empty').replace('"','')
-    userPass = request.args.get('pass', type = str, default='empty').replace('"','')
+    userRegNo = request.args.get(
+        'regNo', type=str, default='empty').replace('"', '')
+    userPass = request.args.get(
+        'pass', type=str, default='empty').replace('"', '')
 
-    result = { "regNo": f"{userRegNo}", "name": "empty", "email": "empty", "class": "empty", "status": "empty" }
+    result = {"regNo": f"{userRegNo}", "name": "empty",
+              "email": "empty", "class": "empty", "status": "empty"}
 
     if "" in [userRegNo, userPass]:
-        result["status"]="invalidArg"
+        result["status"] = "invalidArg"
     else:
-        result["status"]="_"
+        result["status"] = "_"
         signupStudentCreateTable()  # to ensure student tables already exist
         result = validateStudentLogin(userRegNo, userPass, result)
 
@@ -248,11 +277,12 @@ def loginStudent():
 
 # start of functionality for 'teacher login'
 
+
 def validateTeacherLogin(userRegNo, userPass, result):
     db = scoped_session(sessionmaker(bind=engine))
 
     result["status"] = "_ _"
-    
+
     try:
         with engine.connect() as conn:
             returnVal = conn.execute(f'''
@@ -261,11 +291,11 @@ def validateTeacherLogin(userRegNo, userPass, result):
                         ''')
             for row in returnVal:
                 pw_hash = row[3]
-                
-                if bcrypt.check_password_hash(pw_hash, userPass)==False:
+
+                if bcrypt.check_password_hash(pw_hash, userPass) == False:
                     result["status"] = "wrongPass"
                     return result
-                
+
                 result["teacherID"] = row[0]
                 result["name"] = row[2]
                 result["email"] = row[5]
@@ -281,17 +311,21 @@ def validateTeacherLogin(userRegNo, userPass, result):
 
     return result
 
+
 @app.route("/loginTeacher")
 def loginTeacher():
-    userRegNo = request.args.get('regNo', type = str, default='empty').replace('"','')
-    userPass = request.args.get('pass', type = str, default='empty').replace('"','')
+    userRegNo = request.args.get(
+        'regNo', type=str, default='empty').replace('"', '')
+    userPass = request.args.get(
+        'pass', type=str, default='empty').replace('"', '')
 
-    result = { "teacherID":0, "regNo": f"{userRegNo}", "name": "empty", "email": "empty", "status": "empty" }
+    result = {"teacherID": 0, "regNo": f"{userRegNo}",
+              "name": "empty", "email": "empty", "status": "empty"}
 
     if "" in [userRegNo, userPass]:
-        result["status"]="invalidArg"
+        result["status"] = "invalidArg"
     else:
-        result["status"]="_"
+        result["status"] = "_"
         signupTeacherCreateTable()  # to ensure teacher tables already exist
         result = validateTeacherLogin(userRegNo, userPass, result)
 
@@ -299,9 +333,10 @@ def loginTeacher():
 
 # start of functionality for 'add slot'
 
+
 def createSubjectSlotTable():
     db = scoped_session(sessionmaker(bind=engine))
-    
+
     db.execute('''
                 CREATE TABLE IF NOT EXISTS SUBJECTS (
                     SubjectId SERIAL PRIMARY KEY,
@@ -332,12 +367,13 @@ def createSubjectSlotTable():
 
     db.close()
 
+
 def insertSlot(subjectName, slotNo, day, slotClass, regNo):
     db = scoped_session(sessionmaker(bind=engine))
-    status="_ _"
-    collisionCheck=-7 # val will change if slot already exists
-    subjectID=-7
-    teacherID=-7
+    status = "_ _"
+    collisionCheck = -7  # val will change if slot already exists
+    subjectID = -7
+    teacherID = -7
 
     try:
         # getting teacherID
@@ -347,20 +383,20 @@ def insertSlot(subjectName, slotNo, day, slotClass, regNo):
                             ''')
         for row in retVal:
             teacherID = row[0]
-        
-        if teacherID==-7:
-            status = "teacherError" # teacher w given regNo doesnt exist in database
+
+        if teacherID == -7:
+            status = "teacherError"  # teacher w given regNo doesnt exist in database
             return status
 
-        #checking for slot collision
+        # checking for slot collision
         retVal = db.execute(f'''
                                 SELECT * FROM slots
                                 WHERE class = '{slotClass}' AND day = {day} AND slot = {slotNo};
                             ''')
         for row in retVal:
             collisionCheck = row[0]
-        if collisionCheck!=-7:
-            status = "slotError" # slot collision detected
+        if collisionCheck != -7:
+            status = "slotError"  # slot collision detected
             return status
 
         # getting subjectID
@@ -370,9 +406,9 @@ def insertSlot(subjectName, slotNo, day, slotClass, regNo):
                             ''')
         for row in retVal:
             subjectID = row[0]
-        
+
         # add subject if it doesn't exist yet
-        if subjectID==-7:
+        if subjectID == -7:
             with engine.connect() as conn:
                 retVal = conn.execute(f'''
                             INSERT INTO subjects (subjectName)
@@ -381,7 +417,7 @@ def insertSlot(subjectName, slotNo, day, slotClass, regNo):
                         ''')
                 for row in retVal:
                     subjectID = row[0]
-        
+
         with engine.connect() as conn:
             conn.execute(f'''
                         INSERT INTO slots (subjectID, Slot, Day, Class, teacherID)
@@ -390,42 +426,48 @@ def insertSlot(subjectName, slotNo, day, slotClass, regNo):
             status = "success"
 
     except exc.SQLAlchemyError as e:
-            print(type(e))
-            print(e)
-            status = "failure"
+        print(type(e))
+        print(e)
+        status = "failure"
 
     return status
 
+
 @app.route("/addSlot")
 def addSlot():
-    subjectName = request.args.get('subjectName', type = str, default='empty').replace('"','')
-    slotNo = request.args.get('slotNo', type = int, default=-1)
-    day = request.args.get('day', type = int, default=-1)
-    slotClass = request.args.get('slotClass', type = str, default='empty').replace('"','')
-    regNo = request.args.get('regNo', type = str, default='empty').replace('"','')
+    subjectName = request.args.get(
+        'subjectName', type=str, default='empty').replace('"', '')
+    slotNo = request.args.get('slotNo', type=int, default=-1)
+    day = request.args.get('day', type=int, default=-1)
+    slotClass = request.args.get(
+        'slotClass', type=str, default='empty').replace('"', '')
+    regNo = request.args.get(
+        'regNo', type=str, default='empty').replace('"', '')
 
     result = {}
 
     if "empty" in [subjectName, slotClass, regNo]:
-        result["status"]="invalidArg"
+        result["status"] = "invalidArg"
     elif -1 in [slotNo, day]:
-        result["status"]="invalidArg"
+        result["status"] = "invalidArg"
     else:
-        result["status"]="_"
+        result["status"] = "_"
         createSubjectSlotTable()
-        result["status"] = insertSlot(subjectName, slotNo, day, slotClass, regNo)
-    
+        result["status"] = insertSlot(
+            subjectName, slotNo, day, slotClass, regNo)
+
     return jsonify(result)
 
 # start of 'delete slot' functionality
 
+
 def removeSlot(subjectName, slotNo, day, slotClass, regNo):
     db = scoped_session(sessionmaker(bind=engine))
-    status="_ _"
-    collisionCheck=-7 # val will change if slot exists
-    subjectID=-7
-    teacherID=-7
-    delRow=-7
+    status = "_ _"
+    collisionCheck = -7  # val will change if slot exists
+    subjectID = -7
+    teacherID = -7
+    delRow = -7
 
     try:
         # getting teacherID
@@ -435,9 +477,9 @@ def removeSlot(subjectName, slotNo, day, slotClass, regNo):
                             ''')
         for row in retVal:
             teacherID = row[0]
-        
-        if teacherID==-7:
-            status = "teacherError" # teacher w given regNo doesnt exist in database
+
+        if teacherID == -7:
+            status = "teacherError"  # teacher w given regNo doesnt exist in database
             return status
 
         # getting subjectID
@@ -447,23 +489,23 @@ def removeSlot(subjectName, slotNo, day, slotClass, regNo):
                             ''')
         for row in retVal:
             subjectID = row[0]
-        
+
         # subject doesn't exist
-        if subjectID==-7:
+        if subjectID == -7:
             status = "subjectError"
             return status
 
-        #checking for slot existance
+        # checking for slot existance
         retVal = db.execute(f'''
                                 SELECT * FROM slots
                                 WHERE class = '{slotClass}' AND day = {day} AND slot = {slotNo} AND teacherID={teacherID};
                             ''')
         for row in retVal:
             collisionCheck = row[0]
-        if collisionCheck==-7:
-            status = "slotError" # slot doesn't exist/isn't the teachers slot
+        if collisionCheck == -7:
+            status = "slotError"  # slot doesn't exist/isn't the teachers slot
             return status
-        
+
         with engine.connect() as conn:
             conn.execute(f'''
                         DELETE FROM slots
@@ -473,34 +515,40 @@ def removeSlot(subjectName, slotNo, day, slotClass, regNo):
             status = "success"
 
     except exc.SQLAlchemyError as e:
-            print(type(e))
-            print(e)
-            status = "failure"
+        print(type(e))
+        print(e)
+        status = "failure"
 
     return status
 
+
 @app.route("/deleteSlot")
 def deleteSlot():
-    subjectName = request.args.get('subjectName', type = str, default='empty').replace('"','')
-    slotNo = request.args.get('slotNo', type = int, default=-1)
-    day = request.args.get('day', type = int, default=-1)
-    slotClass = request.args.get('slotClass', type = str, default='empty').replace('"','')
-    regNo = request.args.get('regNo', type = str, default='empty').replace('"','')
+    subjectName = request.args.get(
+        'subjectName', type=str, default='empty').replace('"', '')
+    slotNo = request.args.get('slotNo', type=int, default=-1)
+    day = request.args.get('day', type=int, default=-1)
+    slotClass = request.args.get(
+        'slotClass', type=str, default='empty').replace('"', '')
+    regNo = request.args.get(
+        'regNo', type=str, default='empty').replace('"', '')
 
     result = {}
 
     if "empty" in [subjectName, slotClass, regNo]:
-        result["status"]="invalidArg"
+        result["status"] = "invalidArg"
     elif -1 in [slotNo, day]:
-        result["status"]="invalidArg"
+        result["status"] = "invalidArg"
     else:
-        result["status"]="_"
+        result["status"] = "_"
         createSubjectSlotTable()
-        result["status"] = removeSlot(subjectName, slotNo, day, slotClass, regNo)
-    
+        result["status"] = removeSlot(
+            subjectName, slotNo, day, slotClass, regNo)
+
     return jsonify(result)
 
 # start of 'get all slots of a class' functionality
+
 
 def slotsOfClass(userClass):
     db = scoped_session(sessionmaker(bind=engine))
@@ -511,7 +559,7 @@ def slotsOfClass(userClass):
             retVal = conn.execute(f'''
                                     SELECT * FROM slots
                                     WHERE class = '{userClass}';
-                                ''')   
+                                ''')
             for row in retVal:
                 teacherName = ""
                 subjectName = ""
@@ -521,7 +569,7 @@ def slotsOfClass(userClass):
                                     ''')
                 for row1 in ret1:
                     teacherName = row1[0]
-                
+
                 ret2 = conn.execute(f'''
                                         SELECT subjectName FROM subjects
                                         WHERE subjectid={row[1]};
@@ -531,7 +579,7 @@ def slotsOfClass(userClass):
 
                 details = [subjectName, row[2], row[3], teacherName]
                 result[f"{row[0]}"] = details
-        
+
         result["status"] = "success"
 
     except exc.SQLAlchemyError as e:
@@ -544,15 +592,17 @@ def slotsOfClass(userClass):
 
 @app.route("/getSlots")
 def getSlot():
-    userClass = request.args.get('class', type = str, default='empty').replace('"','')
+    userClass = request.args.get(
+        'class', type=str, default='empty').replace('"', '')
 
     if userClass == "empty":
         result = {"status": "invalidArg"}
     else:
         result = slotsOfClass(userClass)
-    
+
     print(result)
     return jsonify(result)
+
 
 if __name__ == "__main__":
     app.run(debug=True)

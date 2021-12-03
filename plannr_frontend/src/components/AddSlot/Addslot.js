@@ -2,18 +2,40 @@ import React, { useState, useEffect } from "react";
 
 import { Button, Form, Message } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
-
+import { useNavigate, useParams } from "react-router-dom";
 import plannrName from "../../images/plannr_name.svg";
 import addSlotImage from "../../images/addSlotImage.svg";
 
 function AddSlot() {
-  const [firstName, setFirstName] = useState("");
+
   const [statusMessage, setStatusMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const [isWarning, setIsWarning] = useState(false);
   const [isError, setIsError] = useState(false);
   const [messageHeader, setMessageHeader] = useState("");
   const [messageContent, setMessageContent] = useState("");
+  const [classTitle,setClassTitle]=useState("");
+  const [classSlot,setClassSlot]=useState("");
+  const [classDay,setClassDay]=useState("");
+  const {regNo, batch} = useParams();
+  function handleSubmit(e){
+    
+    const urlAddSlot = `/addSlot?subjectName="${classTitle}"&slotNo=${classSlot}&day=${classDay}&slotClass="${batch}"&regNo="${regNo}"`
+    alert(urlAddSlot);
+    fetch(urlAddSlot).then(response => {return response.json()}).then(data => {
+      const {status}=data
+      console.log(data)
+    })
+  }
+  function handleClassTitle(e) {
+    setClassTitle(e.target.value);
+  }
+  function handleClassSlot(e,{value}) {
+    setClassSlot(value);
+  }
+  function handleClassDay(e,{value}) {
+    setClassDay(value);
+  }
 
   useEffect(() => {
     switch (statusMessage) {
@@ -90,7 +112,7 @@ function AddSlot() {
           <Form success={isSuccess} warning={isWarning} error={isError}>
             <Form.Field>
               <label>Class Title</label>
-              <input placeholder="Class Title" />
+              <input onChange={handleClassTitle} placeholder="Class Title" />
             </Form.Field>
             <Form.Group widths="equal">
               <Form.Select
@@ -98,12 +120,14 @@ function AddSlot() {
                 label="Slot"
                 options={slotOptions}
                 placeholder="Slot"
+                onChange={handleClassSlot}
               />
               <Form.Select
                 fluid
                 label="Day"
                 options={dayOptions}
                 placeholder="Day"
+                onChange={handleClassDay}
               />
             </Form.Group>
 
@@ -119,10 +143,13 @@ function AddSlot() {
               ""
             )}
 
-            <Button type="submit">Submit</Button>
+            <Button onClick={handleSubmit} type="submit">Submit</Button>
+
           </Form>
         </div>
-        <p>{firstName}</p>
+        <p>{classTitle}</p>
+        <p>{classSlot}</p>
+        <p>{classDay}</p>
       </div>
     </div>
   );
