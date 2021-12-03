@@ -38,11 +38,15 @@ To run this on your system, you need to start up both frontend and backend.
 cd plannr_backend
 ```
 
-2. Activate the virtual environment.
-   If you are on Windows, this can be done via Powershell with:
-
+2. Create a virtual environment.
+   Install the dependencies using:
 ```
-.\plannrVenv\Scripts\activate.ps1
+pip install -r requirements.txt
+```
+
+Activate the virutal environment using:
+```
+.\virtualVenv\Scripts\activate.ps1
 ```
 
 3. Run the server file.
@@ -61,12 +65,18 @@ python server.py
 cd plannr_frontend
 ```
 
-2. Start the frontend using
+2. Install the npm dependencies
+
+```
+npm install
+```  
+
+3. Start the frontend using
 
 ```
 npm start
 ```
 
-3. Open http://localhost:3000/ on your browser. Check if your connection works by looking for a array called _connTest_ in your console.
+4. Open http://localhost:3000/ on your browser. Check if your connection works by looking for a array called _connTest_ in your console.
 
 Once the frontend and backend are working fine, proceed to pray that we finish this somehow. And hopefully, on time 🙂!
