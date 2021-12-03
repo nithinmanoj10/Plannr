@@ -44,3 +44,19 @@
     }
   }
 }
+
+.signup-page__links-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 10px;
+}
+
+.signup-page__links {
+  margin: 2px 0;
+}
+
+.ui button {
+  background-color: var(--col-primary-dark-purple) !important;
+  color: #fff !important;
+}

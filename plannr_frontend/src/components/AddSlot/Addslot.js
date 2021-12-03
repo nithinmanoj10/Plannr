@@ -52,7 +52,7 @@ function AddSlot() {
         }
 
         if (status === "error") {
-          setStatusMessage("Error");
+          setStatusMessage("error");
           setMessageContent("There was an error in adding the slot");
         }
       });
@@ -88,7 +88,7 @@ function AddSlot() {
         setIsSuccess(false);
         setIsWarning(false);
         setIsError(true);
-        setMessageContent("There has been an error in adding the class");
+        setMessageHeader("Error");
         break;
 
       default:
@@ -176,9 +176,6 @@ function AddSlot() {
             </Button>
           </Form>
         </div>
-        <p>{classTitle}</p>
-        <p>{classSlot}</p>
-        <p>{classDay}</p>
       </div>
     </div>
   );

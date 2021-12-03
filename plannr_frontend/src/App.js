@@ -6,6 +6,9 @@ import Login from "./components/Login/Login";
 import Signup from "./components/SignUp/Signup";
 import SignUpFaculty from "./components/SignUp/SignupFaculty";
 import AddSlot from "./components/AddSlot/Addslot";
+import NewSignUpStudent from "./components/SignUp/NewSignUpStudent";
+import NewSignUpFaculty from "./components/SignUp/NewSignUpFaculty";
+import NewLogin from "./components/Login/NewLogin";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
 function App() {
@@ -30,9 +33,9 @@ function App() {
             path="/teacher/:regNo/:teacherID"
             element={<DashBoardTeacher />}
           />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup-student" element={<Signup />} />
-          <Route path="/signup-teacher" element={<SignUpFaculty />} />
+          <Route path="/login" element={<NewLogin />} />
+          <Route path="/signup-student" element={<NewSignUpStudent />} />
+          <Route path="/signup-teacher" element={<NewSignUpFaculty />} />
           <Route
             path="/add-slot/:regNo/:batch/:teacherID"
             element={<AddSlot />}

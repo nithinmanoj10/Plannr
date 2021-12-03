@@ -17,6 +17,7 @@ import {
   Appointments,
   AppointmentForm,
   AppointmentTooltip,
+  CurrentTimeIndicator,
   DragDropProvider,
 } from "@devexpress/dx-react-scheduler-material-ui";
 
@@ -37,13 +38,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const editingOptionsList = [
-  { id: "allowAdding", text: "Adding" },
-  { id: "allowDeleting", text: "Deleting" },
-  { id: "allowUpdating", text: "Updating" },
-  { id: "allowResizing", text: "Resizing" },
-  { id: "allowDragging", text: "Dragging" },
-];
+const editingOptionsList = [{ id: "allowDeleting", text: "Deleting" }];
 
 const EditingOptionsSelector = ({ options, onOptionsChange }) => {
   const classes = useStyles();
@@ -146,11 +141,11 @@ function TimeTableTeacher({ classes, batch, regNo }) {
   }, [classSlots]);
 
   const [editingOptions, setEditingOptions] = React.useState({
-    allowAdding: true,
+    allowAdding: false,
     allowDeleting: true,
-    allowUpdating: true,
-    allowDragging: true,
-    allowResizing: true,
+    allowUpdating: false,
+    allowDragging: false,
+    allowResizing: false,
   });
   const [addedAppointment, setAddedAppointment] = React.useState({});
   const [isAppointmentBeingCreated, setIsAppointmentBeingCreated] =
@@ -250,6 +245,7 @@ function TimeTableTeacher({ classes, batch, regNo }) {
 
           <Appointments appointmentComponent={Appointment} />
 
+          <CurrentTimeIndicator shadePreviousCells={false} />
           <AppointmentTooltip showOpenButton showDeleteButton={allowDeleting} />
           <AppointmentForm
             commandButtonComponent={CommandButton}
