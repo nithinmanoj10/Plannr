@@ -69,4 +69,4 @@ npm start
 
 3. Open http://localhost:3000/ on your browser. Check if your connection works by looking for a array called _connTest_ in your console.
 
-Once the frontend and backend are working fine, proceed to pray that we finish this somehow. And hopefully, on time 🙂.
+Once the frontend and backend are working fine, proceed to pray that we finish this somehow. And hopefully, on time 🙂!
