@@ -7,6 +7,10 @@ import loginImg from "./LoginImg.svg";
 function Login() {
   const navigate = useNavigate();
 
+  function handleSignUp() {
+    navigate("/signup-student");
+  }
+
   const [regNo, setRegNo] = useState("");
   const [password, setPassword] = useState("");
 
@@ -95,12 +99,10 @@ function Login() {
           </button>
         </div>
 
-        <a href="javascript:void(0)" className="signup">
+        <a href="javascript:void(0)" className="signup" onClick={handleSignUp}>
           Dont have an account? Register Here
         </a>
       </div>
-      {/* <p>{regNo}</p>
-      <p>{password}</p> */}
     </div>
   );
 }

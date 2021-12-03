@@ -30,10 +30,14 @@ function Dashboard() {
     navigate("/login");
   }
 
+  function handleLogo() {
+    navigate("/");
+  }
+
   return (
     <div className="dashboard--container">
       <div className="dashboard__nav-bar">
-        <a href="javascript:void(0)" onClick={handleClick}>
+        <a href="javascript:void(0)" onClick={handleLogo}>
           <img
             src={plannrLogo}
             alt="Plannr Logo"

@@ -11,6 +11,14 @@ function Signup() {
   const [DOB, setDOB] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
 
+  function handleSignUpStudent() {
+    navigate("/signup-student");
+  }
+
+  function handleLogin() {
+    navigate("/login");
+  }
+
   // function that handles the click of the form submit button
   // calls the Teacher Signup Backend
   function handleSubmit() {
@@ -143,10 +151,14 @@ function Signup() {
             Submit
           </button>
         </div>
-        <a href="#" className="signup">
+        <a
+          href="javascript:void(0)"
+          onClick={handleSignUpStudent}
+          className="signup"
+        >
           Sign Up - Student
         </a>
-        <a href="#" className="signup">
+        <a href="javascript:void(0)" onClick={handleLogin} className="signup">
           Already have an account? Login Here
         </a>
       </div>

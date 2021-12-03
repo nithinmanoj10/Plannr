@@ -38,6 +38,9 @@ function Dashboard() {
     navigate("/login");
   }
 
+  function handleLogo() {
+    navigate("/");
+  }
   // when teacher clicks the add slot button
   function handleAddSlot() {
     navigate(`/add-slot/${regNo}/${batch}/${teacherID}`);
@@ -57,7 +60,7 @@ function Dashboard() {
   return (
     <div className="dashboard--container">
       <div className="dashboard__nav-bar">
-        <a href="javascript:void(0)" onClick={handleClick}>
+        <a href="javascript:void(0)" onClick={handleLogo}>
           <img
             src={plannrLogo}
             alt="Plannr Logo"
