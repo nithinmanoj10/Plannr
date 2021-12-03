@@ -7,6 +7,7 @@ import plannrName from "../../images/plannr_name.svg";
 import addSlotImage from "../../images/addSlotImage.svg";
 
 function AddSlot() {
+  const navigate = useNavigate();
 
   const [statusMessage, setStatusMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
@@ -14,26 +15,31 @@ function AddSlot() {
   const [isError, setIsError] = useState(false);
   const [messageHeader, setMessageHeader] = useState("");
   const [messageContent, setMessageContent] = useState("");
-  const [classTitle,setClassTitle]=useState("");
-  const [classSlot,setClassSlot]=useState("");
-  const [classDay,setClassDay]=useState("");
-  const {regNo, batch} = useParams();
-  function handleSubmit(e){
-    
-    const urlAddSlot = `/addSlot?subjectName="${classTitle}"&slotNo=${classSlot}&day=${classDay}&slotClass="${batch}"&regNo="${regNo}"`
-    alert(urlAddSlot);
-    fetch(urlAddSlot).then(response => {return response.json()}).then(data => {
-      const {status}=data
-      console.log(data)
-    })
+  const [classTitle, setClassTitle] = useState("");
+  const [classSlot, setClassSlot] = useState("");
+  const [classDay, setClassDay] = useState("");
+  const { regNo, batch, teacherID } = useParams();
+  function handleSubmit(e) {
+    const urlAddSlot = `/addSlot?subjectName="${classTitle}"&slotNo=${classSlot}&day=${classDay}&slotClass="${batch}"&regNo="${regNo}"`;
+    fetch(urlAddSlot)
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        const { status } = data;
+
+        if (status !== "success") alert("Error in creating Slot");
+
+        if (status === "success") navigate(`/teacher/${regNo}/${teacherID}`);
+      });
   }
   function handleClassTitle(e) {
     setClassTitle(e.target.value);
   }
-  function handleClassSlot(e,{value}) {
+  function handleClassSlot(e, { value }) {
     setClassSlot(value);
   }
-  function handleClassDay(e,{value}) {
+  function handleClassDay(e, { value }) {
     setClassDay(value);
   }
 
@@ -143,8 +149,9 @@ function AddSlot() {
               ""
             )}
 
-            <Button onClick={handleSubmit} type="submit">Submit</Button>
-
+            <Button onClick={handleSubmit} type="submit">
+              Submit
+            </Button>
           </Form>
         </div>
         <p>{classTitle}</p>

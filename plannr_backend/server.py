@@ -8,7 +8,7 @@ from flask_bcrypt import Bcrypt
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
 engine = create_engine(
-    f"postgresql://postgres:akshay@localhost:5432/plannr")
+    f"postgresql://postgres:nithin@localhost:5432/plannr")
 # start of functionality for 'test' method
 
 # uncomment what you want to test here
