@@ -19,6 +19,7 @@ function AddSlot() {
   const [classSlot, setClassSlot] = useState("");
   const [classDay, setClassDay] = useState("");
   const { regNo, batch, teacherID } = useParams();
+
   function handleSubmit(e) {
     const urlAddSlot = `/addSlot?subjectName="${classTitle}"&slotNo=${classSlot}&day=${classDay}&slotClass="${batch}"&regNo="${regNo}"`;
     fetch(urlAddSlot)

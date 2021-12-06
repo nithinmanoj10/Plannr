@@ -1,22 +1,17 @@
 ![Plannr Logo](https://github.com/nithinmanoj10/Plannr/blob/master/plannr_frontend/src/images/Plannr%20Banner.png?raw=true)
 
-## Installing Git
+## Pre-requisites
 
-Follow this tutorial if you haven't installed Git yet, else proceed to the next step.
+Make sure these are installed before continuing with the rest of the installations. You may click on the links for the tutorial.
 
-[Install Git and Github in VSCode](https://www.jcchouinard.com/install-git-in-vscode/)
-
-After installing it, run the following command to see if Git is successfully installed.
-
-```
-git --version
-```
-
-It should output the current verison of Git installed.
+1. [Node.js and npm](https://phoenixnap.com/kb/install-node-js-npm-on-windows)
+2. [Git](https://www.jcchouinard.com/install-git-in-vscode/)
+3. [Python](https://www.python.org/downloads/)
+4. [pip](https://phoenixnap.com/kb/install-pip-windows)
 
 ## Installing the WebApp
 
-You can clone this repo to start using this webapp in your machine
+You can clone this repo to start using this webapp in your local machine
 
 Type the following command in the terminal in any working directory
 
@@ -24,49 +19,101 @@ Type the following command in the terminal in any working directory
 git clone https://github.com/nithinmanoj10/Plannr.git
 ```
 
-## Installing Flask and Setting Up the Virtual Environment
+## Setting Up the Virtual Environment
 
-We need to setup the Virtual Environment and install Flask so that our python servers are working properly.
-
-To run this on your system, you need to start up both frontend and backend.
-
-## Backend:
-
-1. Move into the backend directory.
+Go back one directory and install the PlannrEnv environment folder.
 
 ```
-cd plannr_backend
+cd ../
+python -m virtualenv PlannrEnv
 ```
 
-2. Activate the virtual environment.
-   If you are on Windows, this can be done via Powershell with:
+Activate the environment
 
 ```
-.\plannrVenv\Scripts\activate.ps1
+.\PlannrEnv\Scripts\activate.ps1
 ```
 
-3. Run the server file.
+## Installing Backend requirements
+
+Now go into the `plannr_backend` folder and install all the requirements
+
+```
+cd .\Plannr\plannr_backend
+pip install -r requirements.txt
+```
+
+## Installing Frontend requirements
+
+Go into the `plannr_frontend` folder and install all the requirements
+
+```
+cd ..\plannr_frontend
+npm install
+```
+
+## Installing PostgreSQL Database
+
+We will be using the postgreSQL as our database. Make sure it is installed in your system. You can follow this video tutorial to do so.
+
+Note: Please make sure to remember the password you have set as it is really important when starting the database. Recommended that the password only has alphabets and numbers and no special characters.
+
+[Install PostgreSQL](https://www.youtube.com/watch?v=RAFZleZYxsc)
+
+Please follow the given steps after installing PostgreSQL to setup a local session of the Plannr Database.
+
+1. Open up SQL Shell (PSQL)
+
+   ![open psql]()
+
+2. Hit enter 4 times to set to the default values and then enter your password.
+
+   ![enter psql details]()
+
+   You can ignore the warning
+
+3. Create the plannr database. You can use `\l` to view all your databases.
+
+   ```
+   CREATE DATABASE plannr;
+   \l
+   ```
+
+   ![create database]()
+
+4. Connect to the plannr database
+
+   ```
+   \c plannr
+   ```
+
+   ![connect database]()
+
+5. Connect to the plannr database from `server.py`
+
+   1. Go to `server.py` inside the `plannr_backend` folder.
+   2. Locate to line 11 and set the `databasePassword` variable to your PostgreSQL password.
+
+## Starting the Backend:
+
+_Note: Make sure the virtual enviroment is activated._
+
+While still inside the `plannr_backend` directory, run
 
 ```
 python server.py
 ```
 
-4. Check if its running by loading http://localhost:5000/test on your browser.
+Check if its running by loading http://localhost:5000/test on your browser.
 
-## Frontend
+## Starting the Frontend
 
-1. Move into the frontend directory
-
-```
-cd plannr_frontend
-```
-
-2. Start the frontend using
+While inside the `plannr_frontend` directory, run
 
 ```
 npm start
 ```
 
-3. Open http://localhost:3000/ on your browser. Check if your connection works by looking for a array called _connTest_ in your console.
+Open http://localhost:3000/ on your browser. Check if your connection works by looking for a array called _connTest_ in your console.
 
 Once the frontend and backend are working fine, proceed to pray that we finish this somehow. And hopefully, on time 🙂!
