@@ -1,5 +1,17 @@
 ![Plannr Logo](https://github.com/nithinmanoj10/Plannr/blob/master/plannr_frontend/src/images/Plannr%20Banner.png?raw=true)
 
+## Table of Contents
+
+- [Table of Contents](#table-of-contents)
+- [Pre-requisites](#pre-requisites)
+- [Installing the WebApp](#installing-the-webapp)
+- [Setting Up the Virtual Environment](#setting-up-the-virtual-environment)
+- [Installing Backend requirements](#installing-backend-requirements)
+- [Installing Frontend requirements](#installing-frontend-requirements)
+- [Installing PostgreSQL Database](#installing-postgresql-database)
+- [Starting the Backend:](#starting-the-backend)
+- [Starting the Frontend](#starting-the-frontend)
+
 ## Pre-requisites
 
 Make sure these are installed before continuing with the rest of the installations. You may click on the links for the tutorial.
@@ -38,8 +50,6 @@ Activate the environment
 
 Now go into the `plannr_backend` folder and install all the requirements
 
-Activate the virutal environment using:
-
 ```
 cd .\Plannr\plannr_backend
 pip install -r requirements.txt
@@ -58,7 +68,7 @@ npm install
 
 We will be using the postgreSQL as our database. Make sure it is installed in your system. You can follow this video tutorial to do so.
 
-Note: Please make sure to remember the password you have set as it is really important when starting the database. Recommended that the password only has alphabets and numbers and no special characters.
+_Note: Please make sure to remember the password you have set as it is really important when starting the database. Recommended that the password only has alphabets and numbers and no special characters._
 
 [Install PostgreSQL](https://www.youtube.com/watch?v=RAFZleZYxsc)
 
@@ -66,11 +76,11 @@ Please follow the given steps after installing PostgreSQL to setup a local sessi
 
 1. Open up SQL Shell (PSQL)
 
-   ![open psql]()
+   ![open psql](https://github.com/nithinmanoj10/Plannr/blob/master/Images/open_psql.JPG?raw=true)
 
 2. Hit enter 4 times to set to the default values and then enter your password.
 
-   ![enter psql details]()
+   ![enter psql details](https://github.com/nithinmanoj10/Plannr/blob/master/Images/psql_enter_details.JPG?raw=true)
 
    You can ignore the warning
 
@@ -81,7 +91,7 @@ Please follow the given steps after installing PostgreSQL to setup a local sessi
    \l
    ```
 
-   ![create database]()
+   ![create database](https://github.com/nithinmanoj10/Plannr/blob/master/Images/create_database.JPG?raw=true)
 
 4. Connect to the plannr database
 
@@ -89,7 +99,7 @@ Please follow the given steps after installing PostgreSQL to setup a local sessi
    \c plannr
    ```
 
-   ![connect database]()
+   ![connect database](https://github.com/nithinmanoj10/Plannr/blob/master/Images/connect%20database.JPG?raw=true)
 
 5. Connect to the plannr database from `server.py`
 
