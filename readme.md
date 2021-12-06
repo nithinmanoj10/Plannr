@@ -2,7 +2,6 @@
 
 ## Table of Contents
 
-- [Table of Contents](#table-of-contents)
 - [Pre-requisites](#pre-requisites)
 - [Installing the WebApp](#installing-the-webapp)
 - [Setting Up the Virtual Environment](#setting-up-the-virtual-environment)
