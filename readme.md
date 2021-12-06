@@ -33,12 +33,29 @@ git clone https://github.com/nithinmanoj10/Plannr.git
 
 ## Setting Up the Virtual Environment
 
+Install virtualenv
+
+```
+pip install virtualenv
+```
+
 Go back one directory and install the PlannrEnv environment folder.
 
 ```
 cd ../
 python -m virtualenv PlannrEnv
 ```
+
+Before activating the virtualenv, we need to set the Set-ExecutionPolicy as unrestricted.
+
+1. Open Powershell as administrator
+2. Run the following
+   ```
+   Set-ExecutionPolicy unrestricted
+   ```
+3. Selection option A for `[A] Yes to All`
+
+Now go back to the terminal you were using earlier
 
 Activate the environment
 
