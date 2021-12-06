@@ -38,6 +38,8 @@ Activate the environment
 
 Now go into the `plannr_backend` folder and install all the requirements
 
+Activate the virutal environment using:
+
 ```
 cd .\Plannr\plannr_backend
 pip install -r requirements.txt
